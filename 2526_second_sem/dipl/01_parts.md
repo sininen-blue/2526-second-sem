@@ -383,32 +383,110 @@ After the program is actually running, there's still some work required to be do
 
 Things like a garbage collector, type tests, language functions, error handling, and more are all usually part of the runtime
 
-In compiled languages, the runtime is usually a library that is included in the binary
+In compiled languages, the runtime is usually a library that is *included* in the binary
 
-While in interpreted languages, the runtime is usually part of the interpreter or virtual machine
+While in interpreted languages, the runtime is usually part of the *interpreter* or virtual machine
+
+---
+layout: two-cols
+---
+
+## A hypothetical run through
+
+say we have
+
+```python
+houseSize = 100 * 100 * 100
+price = houseSize * 3000
+
+if houseSize < 50000:
+    price = price * 0.9
+```
+
+::right::
+
+1. scanning
+2. parsing
+3. static analysis
+4. intermediate representation
+5. optimization
+6. code generation
+7. virtual machine
+8. runtime
 
 ---
 layout: center
 ---
 
-# Other information about programming languages
+5 minute break time
+
+---
+layout: center
+---
+
+# Other types of compilers
 
 ---
 
 ## Single pass compilers
 
+When writing `c` code, you need to *declare* functions before you use them
+
+**Single pass compilers** do analysis, code generation, and all the other steps **directly** in the parser
+
+It requires all the information to be available at parse time
+
+This means that it's more memory efficient.
+
 ---
 
 ## Tree walk interpreters
+
+Another way to make a programming language is to **skip** generating any intermediate representation or code generation
+
+Common for little languages, but pretty slow
+
+We'll be making one of these
 
 ---
 
 ## Transpiler
 
+A complete backend is difficult
+
+Another option is to take your code, and instead of generating machine code, you generate code in another language and then compile that
+
+This is called **source-to-source compiling** or **transpiling**
+
 ---
 
 ## just in time compilation
 
+Native machine code is the fastest way for your code to run. But interpretation, and the usage of virtual machines allow you to access certain parts of the code easier.
+
+In exchange for performance, you get portability, dynamic typing, easier debugging, and more.
+
+JVM, CLR, and most modern JavaScript engines use **just in time compilation** or JIT
+
+It compiles the code **at runtime**
+
+Fancier JIT compilers will profile and recompile code
+
+---
+layout: center
 ---
 
 # The difference between compiled and interpreted languages
+
+---
+
+## Compiled vs Interpreted
+
+Compiled and interpreted are not mutually exclusive categories
+
+Mechanically there are distinct differences, but in use, these terms usually mean
+
+<img class="mx-auto rounded w-1/3" src="./images/01/difference.png" alt="Compiled vs Interpreted">
+
+- compiled: transforms to machine code you can run
+- interpreted: runs immediately without a separate compilation step
