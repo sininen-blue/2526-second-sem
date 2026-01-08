@@ -1,6 +1,6 @@
 ---
 title: 01 Review
-exportFilename: exports/fpp2/01_parts
+exportFilename: exports/fpp2/01_review
 lineNumbers: true
 ---
 

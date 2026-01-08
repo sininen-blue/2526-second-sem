@@ -1,6 +1,6 @@
 ---
 title: 01 Why Parallel Computing
-exportFilename: exports/pdc/01_why
+exportFilename: exports/pdc/01_intro
 lineNumbers: true
 ---
 
@@ -69,15 +69,15 @@ Therefore the only valid path for improved performance is **not** relying on eve
 
 > Most programs that have been written for conventional, single-core systems cannot use the presence of multiple cores
 
-We can run multiple instances of a program on a multicore system, 
+- We can run multiple instances of a program on a multicore system
 
-To do this, we need to either rewrite our serial programs or write translation programs
+- We need to either rewrite our serial programs or write translation programs
 
 Researchers have had very limited success writing programs that convert serial programs
 
-An efficient parallel implementation of a serial program may not be obtained by finding efficient parallelizations of each of its steps. 
+An efficient parallel implementation of a serial program may not be obtained by finding efficient parallelizations of *each of its steps*. 
 
-The best parallelization may be obtained by devising an entirely new algorithm
+The best parallelization tends to be from devising an entirely new algorithm
 
 ---
 layout: center
@@ -89,14 +89,18 @@ layout: center
 
 ## Problem
 
-Suppose that we need to compute n values and add them together. We know that this can be done with the following serial code:
+> Suppose that we need to compute n values and add them together
 
 ```c
-[1, 4, 3, 9, 2, 8, 
- 5, 1, 1, 6, 2, 7, 
- 2, 5, 0, 4, 1, 8, 
+[1, 4, 3, 9, 2, 8,
+ 5, 1, 1, 6, 2, 7,
+ 2, 5, 0, 4, 1, 8,
  6, 5, 1, 2, 3, 9,]
 ```
+
+---
+
+## An example implementation
 
 ```python
 sum = 0;
@@ -131,8 +135,8 @@ for(my_i = my_first_i; my_i < my_last_i; my_i++) {
 if (I'm the master core) {
     sum = my_sum;
     for each core other than myself {
-            recieve value from core;
-            sum += value;
+        recieve value from core;
+        sum += value;
     }
 } else {
     send my my_sum to master core;
@@ -144,7 +148,6 @@ if (I'm the master core) {
 ## How would you improvement
 
 hint: how would you lower the amount of time spent in the main core
-
 
 <!--translation programs are unlikely to find this-->
 
@@ -161,10 +164,10 @@ There are some common approaches for this
 ## Example
 
 - As an example, suppose that I have to teach a section of this subject.
-- Say that I have 100 students
+- Say that I have **100** students
 - At the end of the semester, I have to grade their final exams
-- So I recruit 4 student assistants to help me check
-- the final exam consists of five questions
+- So I recruit **4** student assistants to help me check
+- the final exam consists of **five** questions
 
 How would I use the five of us to grade the exams as quickly as possible?
 
@@ -174,11 +177,11 @@ How would I use the five of us to grade the exams as quickly as possible?
 
 I can give each of the 4 assistants a **task**
 
-- SA 1 grades question 1, 
-- SA 2 grades question 2, 
+- SA 1 grades only question 1, 
+- SA 2 grades only question 2, 
 - and so on.
 
-The total task is *partitioned* into five **different** tasks, each of which is done by one person
+The total task is *partitioned* into five **different** tasks, each of which is done by one person (core)
 
 This is called **task parallelism**
 
@@ -186,7 +189,7 @@ This is called **task parallelism**
 
 ## Data Parallelism
 
-Alternatively, I can divide the one hundred exams into five piles of twenty exams each, 
+Alternatively, I can divide the one hundred exams into **five piles** of twenty exams each, 
 
 - SA 1 grades all the papers in the first pile,
 - SA 2 grades all the papers in the second pile,
@@ -195,8 +198,10 @@ Alternatively, I can divide the one hundred exams into five piles of twenty exam
 The total task is *partitioned* is not partitioned, but the **data** to be processed is partitioned into five **similar** tasks, each of which is done by one person
 
 ---
+layout: center
+---
 
-## Give me pros and cons of each scenario
+# Give me pros and cons of each scenario
 
 <!--
 context for each question is retained for task parallelism
@@ -205,7 +210,7 @@ transfers happen more in task parallelism
 
 ---
 
-## Back to the example
+## Back to the sum example
 
 Is it task or data parallelism?
 
@@ -215,56 +220,57 @@ Is it task or data parallelism?
 
 *if the tasks can be done independently
 
-if not, there needs to be communication and synchronization between tasks
+When cores can work independently, it works the same way as serial programs
+
+If not, there needs to be **coordination** between tasks
 
 ---
 
-## Communication
+### Communication
 
-one or
-more cores send their current partial sums to another core
+- One or more cores send their current partial sums to another core
+- Sending and receiving data
 
----
+### Load balancing
 
-## Load balancing
-
-In the first part of
-the global sum, it’s clear that we want the amount of time taken by each core to be
-roughly the same as the time taken by the other cores.
+- we want the amount of time taken by each core to be roughly **the same**
+- if one core has to do more work, we **waste** computing resources
 
 ---
 
 ## Synchronization
 
-As an example, suppose that
-instead of computing the values to be added, the values are read from stdin. Say, x is
-an array that is read in by the master core:
+Instead of computing the values to be added, the values are human inputs. 
+
+Say, x is an array that is read in by the master core:
 
 ```
-i f ( I’m t h e m a s t e r c o r e )
-for ( m y _ i = 0 ; m y _ i < n ; m y _ i ++)
-s c a n f ( " % lf " , &x [ m y _ i ] ) ;
+if ( I'm the master core )
+    for (my_i = 0; my_i < n; my_i ++)
+        scanf("%d", &x[my_i]);
 ```
 
-In most systems the cores are not automatically synchronized. Rather, each core
-works at its own pace. In this case, the problem is that we don’t want the other cores
-to race ahead and start computing their partial sums before the master is done ini-
-tializing x and making it available to the other cores. That is, the cores need to wait
-before starting execution of the code:
+In most systems the cores are not automatically synchronized. 
+
+- Each core works at its own pace. 
+
+In this case, the cores need to wait before starting execution of the code:
 
 ```
-for ( m y _ i = m y _ f i r s t _ i ; m y _ i < m y _ l a s t _ i ; m y _ i ++)
-m y _ s u m += x [ m y _ i ] ;
+for (my_i = my_first_i; my_i < my_last_i; my_i++)
+    my_sum += x[my_i];
 ```
 
-We need to add in a point of synchronization between the initialization of x and the
-computation of the partial sums:
+We need to add in a point of **synchronization** between the initialization of x and the computation of the partial sums:
 
 ```
-S y n c h r o n i z e _ c o r e s ( ) ;
+Sync_cores();
 ```
 
 The idea here is that each core will wait in the function Synchronize_cores until all
 the cores have entered the function—in particular, until the master core has entered
 this function
 
+---
+
+## Quiz in NEO
