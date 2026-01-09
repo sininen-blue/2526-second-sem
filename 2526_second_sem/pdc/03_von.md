@@ -1,6 +1,6 @@
 ---
 title: 03 Von Neumann Architecture
-exportFilename: exports/pdc/01_von
+exportFilename: exports/pdc/03_von
 lineNumbers: true
 ---
 

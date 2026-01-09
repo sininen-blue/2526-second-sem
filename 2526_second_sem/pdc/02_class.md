@@ -1,6 +1,6 @@
 ---
 title: 02 Classifications of Parallel Computers
-exportFilename: exports/pdc/01_classifications
+exportFilename: exports/pdc/02_classifications
 lineNumbers: true
 ---
 
