@@ -94,6 +94,12 @@ Mainly in three ways
 3. to run multiple instructions at once
 
 ---
+layout: center
+---
+
+# Caching
+
+---
 
 ## Caching
 
@@ -105,6 +111,8 @@ There are two ways to make the von neumman faster
 
 1. Widen the road
 2. Move the factory
+
+<!--example--> 
 
 ---
 
@@ -145,14 +153,109 @@ Then it can get it quickly from the cache
 
 ## Fuller Example
 
+Note that the CPU cache is not controlled by the programmer, but knowledge of it allows us to have some indirect control of it
+
+For example, in C, we store 2d arrays in row-major order
+```c
+double a[max][max], x[max], y[max];
+
+for (i = 0; i < max; i++)
+    for (j = 0; j < max; j++)
+        y[i] += a[i][j] * x[j];
+
+for (j = 0; j < max; j++)
+    for (i = 0; i < max; i++)
+        y[i] += a[i][j] * x[j];
+```
+
+Assume `max = 3`
+
+Which of these results in less cache misses?
+
 ---
 
 ## Virtual Memory
+
+Assume you need to open another program, but you don't have enough RAM. Or you're running a program with a dataset too large to fit in RAM
+
+Virtual memory allows the operating system to use disk space as "extra RAM"
+
+When a program tries to access memory that is not in RAM, it's a **page fault**
 
 ---
 
 ## Instruction level parallelism
 
---
+Using multiple functional units to simultaneously execute instructions
 
-## Hardware multi threading
+There are two main ways to speed up instruction execution
+1. Pipelining
+2. Multiple issue
+
+---
+
+### Pipelining
+
+Factory assembly line example
+
+<!--
+car engine to chassis
+transmission to engine
+body to chassis
+-->
+
+---
+
+### In computers
+
+Assume we want to add $$9.87 * 10^4$$ and $$6.54 * 10^3$$
+
+Our steps there will be
+1. fetch
+2. compare exponents
+3. shift one operand
+4. add
+5. add
+6. round
+7. store
+
+```
+float x[1000], y[1000], z[1000];
+
+for (i = 0; i < 1000; i++) {
+    z[i] = x[i] + y[i];
+}
+```
+
+Assuming each addition takes 7 nanoseconds, this loop will take how long?
+
+---
+
+### Pipelined
+
+image
+
+Assuming the computer pipelines this addition
+- every single addition still takes 7 nanoseconds
+- but a new addition can start every nanosecond
+
+The loop will take how long now?
+
+<!--1006-->
+
+---
+
+### Multiple issue
+
+Some processors (most modern ones) can issue multiple instructions at once
+
+In our previous example
+```
+float x[1000], y[1000], z[1000];
+
+for (i = 0; i < 1000; i++) {
+    z[i] = x[i] + y[i];
+}
+```
+
+If we assume that we have 2 instead of 1 adder unit, we can effectively double the throughput of our additions
