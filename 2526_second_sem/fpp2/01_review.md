@@ -88,6 +88,20 @@ letters[2:5] = []
 ```
 
 ---
+
+## Dictionaries
+```python
+tel = {'jack': 4098, 'sape': 4139}
+tel['guido'] = 4127
+tel['jack']
+del tel['sape']
+tel['irv'] = 4127
+list(tel.keys())
+'guido' in tel
+```
+
+
+---
 layout: center
 ---
 
@@ -331,15 +345,22 @@ def palidrome(word):
     A palindrome is a word that reads the same forwards and backwards.
 
     Input: word (String)
+    Output: Dictionary with the following keys:
+        - length: Length of the word (int)
+        - vowels: Number of vowels in the word (int)
+        - forward: The word as is (String)
+        - backward: The word reversed (String)
+        - is_palidrome: True if the word is a palindrome, False otherwise (Boolean)
 
     Example Output:
     palidrome("racecar")
-
-    length: 7
-    vowels: 3
-    forward: racecar
-    backward: racecar
-    is palidrome: True
+    {
+        length: 7,
+        vowels: 3,
+        forward: racecar,
+        backward: racecar,
+        is_palidrome: True,
+    }
     """
 ```
 
