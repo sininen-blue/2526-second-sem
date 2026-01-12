@@ -19,10 +19,12 @@ lineNumbers: true
 - Thonny
 
 ---
+layout: center
+---
 
-## Types
+# Types
 - numbers
-- text
+- strings
 - lists
 - dictionaries
 
@@ -270,6 +272,12 @@ def scope_test():
     print("After global assignment:", spam)
 ```
 
+<style>
+.slidev-code {
+    font-size: 14px !important;
+}
+</style>
+
 ---
 
 ## input parameters
@@ -336,22 +344,31 @@ breadshop("White bread", "Honda Civic",
 ```
 
 ---
+layout: two-cols
+---
 
 ## Exercise
 ```python
 def palidrome(word):
     """
     Check if a word is a palindrome.
-    A palindrome is a word that reads the same forwards and backwards.
+    A palindrome is a word that reads 
+        the same forwards and backwards.
 
     Input: word (String)
-    Output: Dictionary with the following keys:
-        - length: Length of the word (int)
-        - vowels: Number of vowels in the word (int)
-        - forward: The word as is (String)
-        - backward: The word reversed (String)
-        - is_palidrome: True if the word is a palindrome, False otherwise (Boolean)
-
+    Output: Dictionary 
+    - length: Length of the word (int)
+    - vowels: Number of vowels (int)
+    - forward: The word as is (String)
+    - backward: reversed (String)
+    - is_palidrome: 
+        True if the word is a palindrome, 
+        False otherwise (Boolean)
+    """
+```
+::right::
+```python
+    """
     Example Output:
     palidrome("racecar")
     {
@@ -364,3 +381,16 @@ def palidrome(word):
     """
 ```
 
+This is available in codechum
+
+Please enroll with the code
+
+```
+brazen-22018
+```
+
+<style>
+.grid-cols-2 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+}
+</style>
