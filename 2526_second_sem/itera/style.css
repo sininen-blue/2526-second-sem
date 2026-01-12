@@ -1,0 +1,22 @@
+:root {
+	--slidev-code-font-size: 16px !important;
+	--slidev-code-line-height: 21px !important;
+}
+
+.slidev-layout {
+	p {
+		font-size: 1.2rem;
+	}
+
+	strong {
+		color: #ff4081;
+	}
+
+	.col-left {
+		padding-right: 1rem;
+	}
+
+	.col-right {
+		padding-left: 1rem;
+	}
+}
