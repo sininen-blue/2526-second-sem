@@ -6,13 +6,23 @@ lineNumbers: true
 
 # Introduction
 
-Parallel computing is an important aspect of modern computing systems. And while you may not be writing parallel code ourselves, with the tools we use every day automatically leveraging parallelism, it is important to understand the concepts and principles behind parallel computing.
+---
+
+## Introduction
+
+Parallel computing is an important aspect of modern computing systems. 
+
+And while you *may* not be writing parallel code ourselves, with the tools we use every day automatically leveraging parallelism, it is important to understand the concepts and principles behind parallel computing.
+
+<img class="mx-auto rounded w-1/3 pt-4" src="./images/01/apple_m1.png"/>
+
+<!--examples of parallel systems-->
 
 ---
 
 ## Single processor performance
 
-graph here
+<img class="mx-auto rounded w-1/2 pt-4" src="./images/01/moores_law.png"/>
 
 - 1986 - 2003
 - 2003
@@ -28,26 +38,34 @@ Since 2003, however, single-processor performance improvement has slowed to the 
 
 ## Change in processor design
 
-By 2005, most of the major manufacturers of microprocessors had decided that the road to rapidly increasing performance lay in the direction of parallelism. 
+By 2005, most of the major manufacturers of microprocessors had decided that the road to rapidly increasing performance lay in the direction of **parallelism**. 
 
-Intel Pentium D and AMD Athlon 64 x 2
+> Intel Pentium D and AMD Athlon 64 x 2
 
 For software developers: 
 - simply adding more processors will not improve the performance of a programs
 
-Minecraft Java Edition
+<img class="mx-auto rounded w-1/4" src="./images/01/minecraft.png"/>
 
-
+---
+layout: center
 ---
 
 # Why care about parallel computing?
 
 ---
+layout: center
+---
 
 ## To increase performance
 
 <!--
-For example, decoding the human genome, ever more accurate medical imaging, astonishingly fast and accurate Web searches, and ever more realistic and responsive computer games would all have been impossible without these increases. Indeed, more recent increases in computational power would have been difficult, if not impossible, without earlier increases
+For example, 
+
+- decoding the human genome, 
+- ever more accurate medical imaging, 
+- astonishingly fast and accurate Web searches, 
+- and ever more realistic and responsive computer games would all have been impossible without these increases. 
 -->
 
 ---
@@ -58,22 +76,33 @@ For example, decoding the human genome, ever more accurate medical imaging, asto
 
 - As the speed of transistors increases, their power consumption also increases. 
 
-- Most of this power is dissipated as heat, and air-cooled integrated circuits reached the limits of
-their ability to dissipate heat
+- Most of this power is dissipated as heat, and air-cooled integrated circuits reached the limits of their ability to dissipate heat
+
+<img class="mx-auto rounded w-1/3" src="./images/01/thermal_throttling.png"/>
+
 
 Therefore the only valid path for improved performance is **not** relying on ever-faster single processors
 
 ---
+layout: two-cols-header
+---
 
 ## why write parallel programs
 
-> Most programs that have been written for conventional, single-core systems cannot use the presence of multiple cores
+- Why do we have to actually write parallel programs?
 
-- We can run multiple instances of a program on a multicore system
+Most programs that have been written for conventional, single-core systems **cannot** use the presence of multiple cores
+
+::left::
+While we can run multiple instances of a program on a multicore system, that's not very useful
 
 - We need to either rewrite our serial programs or write translation programs
 
-Researchers have had very limited success writing programs that convert serial programs
+::right::
+
+### The problem with translation
+
+Researchers have had limited success writing programs that convert serial programs
 
 An efficient parallel implementation of a serial program may not be obtained by finding efficient parallelizations of *each of its steps*. 
 
@@ -98,6 +127,7 @@ layout: center
  6, 5, 1, 2, 3, 9,]
 ```
 
+<!-- sum is 95 -->
 ---
 
 ## An example implementation
@@ -127,12 +157,14 @@ for(my_i = my_first_i; my_i < my_last_i; my_i++) {
 }
 ```
 
+With 24 values and 8 cores, how much should each core compute?
+
 ---
 
 ## Global Sum
 
 ```python
-if (I'm the master core) {
+if (Im the master core) {
     sum = my_sum;
     for each core other than myself {
         recieve value from core;
@@ -144,30 +176,36 @@ if (I'm the master core) {
 ```
 
 ---
+layout: center
+---
 
-## How would you improvement
+# How would you improve this program
 
 hint: how would you lower the amount of time spent in the main core
 
 <!--translation programs are unlikely to find this-->
 
 ---
+layout: center
+---
 
-## How to write parallel programs
-
-There are a number of possible answers to this question, but most of them depend on the basic idea of partitioning the work to be done among the cores
-
-There are some common approaches for this
+# How to write parallel programs
 
 ---
 
-## Example
+## How to write parallel programs
 
-- As an example, suppose that I have to teach a section of this subject.
+There are a number of possible answers to this question, but most of them depend on the basic idea of **partitioning** the work to be done among the cores
+
+There are some common approaches for this, but before that
+
+### Example
+
+- Suppose that I have to teach a section of this subject
 - Say that I have **100** students
 - At the end of the semester, I have to grade their final exams
 - So I recruit **4** student assistants to help me check
-- the final exam consists of **five** questions
+- the final exam consists of **five** open ended questions with a rubric
 
 How would I use the five of us to grade the exams as quickly as possible?
 
@@ -209,68 +247,108 @@ transfers happen more in task parallelism
 -->
 
 ---
+layout: center
+---
 
 ## Back to the sum example
 
 Is it task or data parallelism?
 
 ---
+layout: center
+---
 
-## Writing parallel programs can be easy
+# Coordination
 
-*if the tasks can be done independently
+---
+
+## Coordination in Parallel Programs
+
+*if the tasks can be done independently*
+
+> Writing parallel programs can be easy
 
 When cores can work independently, it works the same way as serial programs
 
 If not, there needs to be **coordination** between tasks
 
 ---
+layout: two-cols-header
+---
 
+## Coordination in Parallel Programs
+
+The more common ways for tasks to be coordinated are:
+
+::left::
 ### Communication
 
-- One or more cores send their current partial sums to another core
-- Sending and receiving data
+- One or more cores **send** their current partial sums to another core
+- **Sending** and **receiving** data
 
+<img class="mx-auto rounded w-3/4 pt-4" src="./images/01/mpi_comm.png"/>
+
+::right::
 ### Load balancing
 
 - we want the amount of time taken by each core to be roughly **the same**
 - if one core has to do more work, we **waste** computing resources
 
+<img class="mx-auto rounded w-1/3 pt-4" src="./images/01/factorio_load_balancer.png"/>
+
 ---
 
 ## Synchronization
 
-Instead of computing the values to be added, the values are human inputs. 
+> Instead of computing the values to be added, the values are human inputs. 
 
-Say, x is an array that is read in by the master core:
+Say, `x` is an array that is read in by the master core:
 
-```
-if ( I'm the master core )
+```c
+if ( Im the master core )
     for (my_i = 0; my_i < n; my_i ++)
         scanf("%d", &x[my_i]);
 ```
 
-In most systems the cores are not automatically synchronized. 
+In most systems the cores are **not automatically synchronized**. 
 
 - Each core works at its own pace. 
 
-In this case, the cores need to wait before starting execution of the code:
-
-```
+If we assume that the core is running the following code:
+```c
 for (my_i = my_first_i; my_i < my_last_i; my_i++)
     my_sum += x[my_i];
 ```
 
-We need to add in a point of **synchronization** between the initialization of x and the computation of the partial sums:
+Give me one runtime error
+
+---
+
+## Synchronization
+
+In this case, the cores need to **wait** before starting execution of the code:
+
+```c
+for (my_i = my_first_i; my_i < my_last_i; my_i++)
+    my_sum += x[my_i];
+```
+
+We need to add in a point of **synchronization** *between* the initialization of `x` and the computation of the `partial sums`:
 
 ```
 Sync_cores();
 ```
 
-The idea here is that each core will wait in the function Synchronize_cores until all
-the cores have entered the function—in particular, until the master core has entered
-this function
+The idea here is that each core will wait **in the function** `Sync_cores` until **all** the cores have entered the function
 
+
+> So given, `input`, `compute partial`, `sync`, and `compute global`, what is the correct order of execution?
+
+
+---
+layout: center
 ---
 
 ## Quiz in NEO
+
+15-minute study break
