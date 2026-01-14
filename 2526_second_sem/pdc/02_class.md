@@ -19,9 +19,9 @@ Including, but not limited to:
 - OpenMP
 - CUDA
 
-The two ways of classifying these architectures is through 
-1. each cores access to memory
-2. if each core can operate independently
+The two ways of classifying these APIs is through 
+1. each core's **access** to memory (classification through memory)
+2. if each core can operate **independently** (classification through instructions)
 
 ---
 layout: center
@@ -37,7 +37,7 @@ Where each core can **share** access to the computer's memory
 
 - each core can read and write each memory location
 
-Image here
+<img class="mx-auto rounded w-1/2" src="./images/02/shared_memory.png">
 
 Each core is coordinated by reading and updating to memory locations
 
@@ -45,14 +45,14 @@ Each core is coordinated by reading and updating to memory locations
 
 ## Distributed memory systems
 
-Where each core has its own private memory
+Where each core has its own **private** memory
 
-- each core can only read and write to its own memory
+- each core can only read and write to its **own** memory
 - but has explicit methods to communicate with other cores
 
-image here
+<img class="mx-auto rounded w-1/2" src="./images/02/distributed_memory.png.png">
 
-Each core is coordinated by sending messages to each other
+Each core is coordinated by *sending messages* to each other
 
 ---
 
@@ -65,23 +65,23 @@ Each core is coordinated by sending messages to each other
 Where each core is considered a normal processor, 
 - with their own control units, 
 - ALUs,
-- and can operate independently
+- and can operate **independently**
 
 This is called a Multiple-Instruction Multiple-Data (MIMD) system
 
-You can do addition **and** multiplication at the same time
+You can do addition **and** multiplication on different sets of data at the same time
 
 ---
 
 ## Single instruction multiple data
 
-Where each core is does not have its own control unit*
+Where each core is *does not* have its own control unit
 - Each core share a single control unit
 - but they can access their own memory
 
 This is called a Single-Instruction Multiple-Data (SIMD) system
 
-you must do addition **or** multiplication at the same time
+you must do addition **or** multiplication on different sets of data
 
 ---
 
@@ -96,9 +96,9 @@ For example
 
 ```c
 int x[n], y[n], z[n];
-...
-for (int i = 0; i < n; i++) {
-    z[i] = x[i] + y[i];
+
+for (___) {
+    ___
 ```
 
 ---
