@@ -58,20 +58,19 @@ Why do languages without garbage collection exist?
 ## Data types
 
 - Booleans
-```lox
+```
 true;
 false;
 ```
 
-- numbers
-    - all numbers are double-precision floating point
-```lox
+- numbers (all numbers are double-precision floating point)
+```
 1234;
 12.34;
 ```
 
 - strings
-```lox
+```
 "This is a string.";
 ```
 
@@ -86,6 +85,8 @@ give me other data types that other languages have
 -->
 
 ---
+layout: center
+---
 
 # Expressions
 
@@ -99,10 +100,11 @@ subtract - me;
 multiply * me;
 divide / me;
 ```
-    - **operands**: the things on the left and right
-    - **binary**: because there are two operands
-    - **infix**: because the operator is in between
-    - one arithmetic operator can be both **infix** and **prefix**
+
+- **operands**: the things on the left and right
+- **binary**: because there are two operands
+- **infix**: because the operator is in between
+- one arithmetic operator can be both **infix** and **prefix**
 
 ---
 
@@ -136,10 +138,11 @@ Works like control flow
 true and false
 true or false
 ```
+
 - if both true > return right side
 - if not both true > return left side
 
-Vice versa for or
+Vice versa for `or`
 
 <!--
 how do you do and in C
@@ -155,6 +158,8 @@ Same precedence as C
 var average = (min + max) / 2;
 ```
 
+---
+layout: center
 ---
 
 # Statements
@@ -184,6 +189,8 @@ print "hello, world!";
 ```
 
 ---
+layout: center
+---
 
 # Variables
 
@@ -201,6 +208,8 @@ var breakfast = "bagels";
 print breakfast;
 ```
 
+---
+layout: center
 ---
 
 # Control Flow
@@ -231,6 +240,8 @@ for (var i = 0; i < 10; i = i + 1) {
 }
 ```
 
+---
+layout: center
 ---
 
 # Functions
@@ -271,6 +282,10 @@ fun identity(a) {
 print identity(addPair)(1, 2);
 ```
 
+---
+
+## Closures
+
 Scoping also works as expected
 ```
 fun outerFunction(a) {
@@ -300,15 +315,21 @@ fn();
 ```
 
 ---
+layout: center
+---
+
 
 # Classes
 
 ---
+layout: center
+---
+
 
 ## Why object oriented
 
 1. People still use object-oriented programming for many tasks.
-2. It **works**
+2. It **works***
 
 ---
 
@@ -333,12 +354,13 @@ There are two main approaches to making objects
 ## Classes
 
 In class based languages, the main concepts are
-1. instances, which store the state of an object
-2. classes, which contains the methods and inheritance chain
+
+1. instances, which store the **state** of an object
+2. classes, which contains the **methods and inheritance** chain
 
 To call a method on an instance, you go inside the instance, find the class, then find the method.
 
-image
+<img class="mx-auto rounded w-1/2" src="./images/02/class.png" alt="class diagram">
 
 ---
 
@@ -346,9 +368,9 @@ image
 
 In prototype based languages, there are only objects and no classes
 
-image
+<img class="mx-auto rounded w-1/4" src="./images/02/prototype.png" alt="prototype diagram">
 
-And objects can directly "inherit" from other objects (**delegate**)
+And objects can directly "inherit" from other objects (*delegate*)
 
 Simpler to implement, but people are more familiar with classes
 
@@ -378,9 +400,9 @@ breakfast.cook();
 
 ## Initialization
 
-The idea of object oriented programming is to bundle data and behavior together
+The idea of object oriented programming is to **bundle** data and behavior together
 
-Like some other dynamically typed languages, Lox let's you freely add properties to objects
+Like some other dynamically typed languages, Lox let's you *freely* add properties to objects
 ```
 breakfast.meat = "ham";
 breakfast.bread = "white bread"
@@ -390,6 +412,10 @@ class Breakfast {
         print "Here is your " + meat + " on " + bread + ", " + who;
     }
 ```
+
+---
+
+## Initialization
 
 `init()` is called when an instance is created
 ```
@@ -420,6 +446,10 @@ class Brunch < Breakfast {
 ```
 
 Where `Brunch` is a derived class or *subclass*, and `Breakfast` is a base class or *superclass*.
+
+---
+
+## Inheritance
 
 Every method defined in `Breakfast` is also available in `Brunch`.
 
