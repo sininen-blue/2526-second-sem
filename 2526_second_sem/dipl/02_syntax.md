@@ -1,6 +1,6 @@
 ---
 title: 02 Lox language syntax
-exportFilename: exports/dipl/01_scanner
+exportFilename: exports/dipl/02_syntax
 lineNumbers: true
 ---
 
