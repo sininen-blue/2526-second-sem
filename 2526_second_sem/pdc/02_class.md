@@ -50,10 +50,12 @@ Where each core has its own **private** memory
 - each core can only read and write to its **own** memory
 - but has explicit methods to communicate with other cores
 
-<img class="mx-auto rounded w-1/2" src="./images/02/distributed_memory.png.png">
+<img class="mx-auto rounded w-1/2" src="./images/02/distributed_memory.png">
 
 Each core is coordinated by *sending messages* to each other
 
+---
+layout: center
 ---
 
 # Instruction Classifications

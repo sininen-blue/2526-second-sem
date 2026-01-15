@@ -5,7 +5,7 @@
   "scripts": {
     "build": "slidev build",
     "dev": "slidev --open $(fzf)",
-    "export": "slidev export --dark $(fzf)"
+    "export": "slidev export --dark $(fzf) --with-clicks"
   },
   "dependencies": {
     "@slidev/cli": "^52.11.1",

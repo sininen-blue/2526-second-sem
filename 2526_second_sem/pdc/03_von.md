@@ -7,6 +7,8 @@ lineNumbers: true
 # Introduction
 
 ---
+layout: two-cols
+---
 
 ## The von Neumann Architecture
 
@@ -17,14 +19,21 @@ consisting of
 
 It's the basis of **all*** modern computers
 
+::right::
+<img class="mx-auto rounded w-3/4" src="./images/03/von_neumann.png">
+
+
+---
+layout: two-cols
 ---
 
 ## The von Neumann Architecture
 
-image here
-
 - control unit: what instruction to do
 - data path: executing the instructions
+
+::right::
+<img class="mx-auto rounded w-3/4" src="./images/03/von_neumann.png">
 
 <!--
 cpu is empty
@@ -38,15 +47,19 @@ data path sends back to memory or stores in registers
 
 ## The von Neumann Bottleneck
 
-CPU's are incredibly fast, millions of instructions per second fast
+- CPU's are incredibly **fast**, millions of instructions per second fast
 
-Memory, and memory transfers, are slow, thousands of bits per second slow
+- Memory, and memory transfers, are **slow**, thousands of bits per second slow
 
-And in a loop system, the slowest part determines the speed of the whole system
+- And in a loop system, the slowest part determines the speed of the whole system
+
+<img class="mx-auto rounded w-1/3" src="./images/03/bottleneck.png">
 
 ---
+layout: center
+---
 
-## factory and warehouse
+# Factory and warehouse
 
 ---
 
@@ -78,7 +91,7 @@ When processes need to wait for resources, a **block**, it gives the opportunity
 
 Usually done with **threads**
 
-image
+<img class="mx-auto rounded w-1/3" src="./images/03/process.png">
 
 ---
 
@@ -98,6 +111,7 @@ layout: center
 ---
 
 # Caching
+to not pull in as much data
 
 ---
 
@@ -107,12 +121,10 @@ The most widely used modification
 
 > Back to the example
 
-There are two ways to make the von neumman faster
+There are two ways to make factory faster
 
 1. Widen the road
-2. Move the factory
-
-<!--example--> 
+2. Move the factory or warehouse
 
 ---
 
@@ -173,30 +185,46 @@ Assume `max = 3`
 Which of these results in less cache misses?
 
 ---
+layout: center
+---
+
+# Virtual Memory
+to pull more data at once
+
+---
 
 ## Virtual Memory
 
 Assume you need to open another program, but you don't have enough RAM. Or you're running a program with a dataset too large to fit in RAM
 
-Virtual memory allows the operating system to use disk space as "extra RAM"
+Virtual memory allows the operating system to use disk space as "*extra RAM*"
 
 When a program tries to access memory that is not in RAM, it's a **page fault**
+
+<img class="mx-auto rounded w-1/3" src="./images/03/virtual_memory.png">
+
+---
+layout: center
+---
+
+# Instruction level parallelism
+to run multiple instructions at once
 
 ---
 
 ## Instruction level parallelism
 
-Using multiple functional units to simultaneously execute instructions
+Using multiple functional units to **simultaneously** execute instructions
 
 There are two main ways to speed up instruction execution
 1. Pipelining
 2. Multiple issue
 
 ---
+layout: center
+---
 
-### Pipelining
-
-Factory assembly line example
+## Factory assembly line example
 
 <!--
 car engine to chassis
@@ -205,10 +233,22 @@ body to chassis
 -->
 
 ---
+layout: two-cols
+---
 
-### In computers
+## In computers
 
-Assume we want to add $$9.87 * 10^4$$ and $$6.54 * 10^3$$
+Assume we want to add 
+
+$$
+9.87 * 10^4
+$$
+
+and 
+
+$$
+6.54 * 10^3
+$$
 
 Our steps there will be
 1. fetch
@@ -219,7 +259,13 @@ Our steps there will be
 6. round
 7. store
 
-```
+::right::
+
+<img class="mx-auto rounded w-4/4 mt-4 mb-4" src="./images/03/addition.png">
+
+So for code like the one below
+
+```c
 float x[1000], y[1000], z[1000];
 
 for (i = 0; i < 1000; i++) {
@@ -231,9 +277,9 @@ Assuming each addition takes 7 nanoseconds, this loop will take how long?
 
 ---
 
-### Pipelined
+## Pipelined
 
-image
+<img class="mx-auto rounded w-1/4 mt-4 mb-4" src="./images/03/pipeline.png">
 
 Assuming the computer pipelines this addition
 - every single addition still takes 7 nanoseconds
@@ -245,7 +291,7 @@ The loop will take how long now?
 
 ---
 
-### Multiple issue
+## Multiple issue
 
 Some processors (most modern ones) can issue multiple instructions at once
 
