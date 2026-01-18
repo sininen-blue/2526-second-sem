@@ -14,6 +14,14 @@ We'll be writing around 2000 lines of java code to implement a tree-walk interpr
 
 Everyone will end up with the same end result with the same code, and so the majority of your grade will come from your ability to explain and demonstrate your code.
 
+Create an empty folder named
+
+```
+lastname_cs370
+```
+
+and put it on github
+
 ---
 
 ## Framework
@@ -32,7 +40,16 @@ import java.nio.charset.Charset;
 import java.io.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+```
 
+---
+
+## Framework
+```
+lox/Lox.java
+after imports
+```
+```java
 public class Lox {
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
@@ -108,6 +125,8 @@ private static void run(String source) {
 
 ## Error handling
 
+A requirement for actually usable languages
+
 ```
 lox/Lox.java
 add after run()
@@ -122,6 +141,8 @@ private static void report(int line, String where, String message) {
     hadError = true;
 }
 ```
+
+It's good practice to separate creating an error and reporting an error
 
 ---
 
@@ -150,6 +171,8 @@ in runFile()
     if (hadError) System.exit(65);
 }
 ```
+
+and
 ```
 lox/Lox.java
 in runPrompt()
@@ -178,7 +201,7 @@ layout: center
 ## Lexemes
 
 This is a line of Lox code
-```lox
+```
 var language = "lox";
 ```
 
@@ -210,10 +233,10 @@ If we take a lexeme and bundle it together with other data, it becomes a **token
 Most parsers run with a logic like
 
 ```
-if the next token is while then do ...
+if the next token is WHILE then do ...
 ```
 
-But that means that the parser needs to know more information about the token than just its lexeme
+But that means that the parser needs to know more information about the token than just its lexeme. It wants to know if the lexme is a reserved keyword, which keyword it is, what value it has
 
 We *could* do that by matching strings, but that's slow, error-prone, and clunky.
 
@@ -231,27 +254,31 @@ package com.craftinginterpreters.lox;
 
 enum TokenType {
     LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
-    COMMA, DOT, MINU, PLUS, SEMICOLON, SLASH, STAR
-
+    COMMA, DOT, MINU, PLUS, SEMICOLON, SLASH, STAR, //
     BANG, BANG_EQUAL,
     EQUAL, EQUAL_EQUAL,
     GREATER, GREATER_EQUAL,
-    LESS, LESS_EQUAL,
-
-    IDENTIFIER, STRING, NUMBER,
-
+    LESS, LESS_EQUAL, //
+    IDENTIFIER, STRING, NUMBER, //
     AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
-    PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
-
+    PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE, //
     EOF
 }
 ```
 
 ---
+layout: center
+---
 
 ## Literal Value and Location
 
 Give me an example of a literal value in `python`
+
+A statement, line, that evaluates to just a value
+
+---
+
+## Literal Value and Location
 
 Some lexemes have values associated with them, like numbers and strings
 - `123` has the value `123`
@@ -259,6 +286,10 @@ Some lexemes have values associated with them, like numbers and strings
 - `var` has no value
 
 And we also want to track where in the source code the token appeared for error reporting
+
+---
+
+## Literal Value and Location
 
 ```
 lox/Token.java
@@ -268,11 +299,22 @@ create new file
 package com.craftinginterpretrs.lox;
 
 class Token {
-    final TokenType type;
+    final TokenType type; // const
     final String lexeme;
     final Object literal;
     final int line;
 
+```
+
+---
+
+## Literal Value and Location
+
+```
+lox/Token.java
+after declarations
+```
+```java
     Token(TokenType type, String lexeme, Object literal, int line) {
         this.type = type;
         this.lexeme = lexeme;
@@ -296,7 +338,7 @@ layout: center
 
 ## Regular languages
 
-<img class="mx-auto w-1/3 pt-4" src="./images/04/aligator.png"/>
+<img class="mx-auto rounded w-1/3 pt-4" src="./images/04/aligator.png"/>
 
 We want to *produce* **tokens** from a stream of characters, the process to doing that is fairly mechanical
 1. starting with the first character,
@@ -310,15 +352,15 @@ We want to *produce* **tokens** from a stream of characters, the process to doin
 
 ## Regular expressions
 
-The figuring out, matching, step can be done with **regular expressions**, for example
+The figuring out (matching) step *can* be done with **regular expressions**, for example
 
 ```
-[a-zA-Z_][a_zA-Z_0-9]*
+[a-zA-Z_][a-zA-Z_0-9]*
 ```
 
 Which matches identifiers and keywords in Lox
 
-And the rules that determines how to group characters into lexemes is called **lexical grammar**. And most languages rules are simple enough that it can be classified as a **regular language**.
+And the rules that determines how to group characters into lexemes is called **lexical grammar**. And most languages have simple enough rules that it can be classified as a **regular language**.
 
 And we *can* use regular expressions to describe the entire lexical grammar of Lox
 
@@ -337,8 +379,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.craftinginterpreters.lox.TokenType.*;
+import static com.craftinginterpreters.lox.TokenType.*; // belongs to the class
 
 class Scanner {
     private final String source;
@@ -368,9 +409,14 @@ add after Scanner()
     }
 ```
 
+So it goes through the source code, and keeps adding tokens until it hits the end
+
+Then it adds an end of file token, and returns it
+
 ---
 
 ## The Scanner Class
+Some data we need to keep track of
 ```
 lox/Scanner.java
 in class Scanner
@@ -381,6 +427,8 @@ in class Scanner
     private int current = 0;
     private int line = 1;
 ```
+
+and our first of many helper functions
 
 ```
 lox/Scanner.java
@@ -421,16 +469,18 @@ layout: two-cols
 ## Exercise 1
 
 A switch statement is defined in java as
+```
+lox/Scanner.java
+under char c
+```
 ```java
-switch (variable) {
+switch (c) {
     case VALUE_1:
         // code block
         break;
     case VALUE_2:
         // code block
         break;
-    default:
-        // code block
 }
 ```
 
@@ -451,6 +501,12 @@ specifically, make it recognize these lexemes:
 - `+`
 - `;`
 - `*`
+
+<style>
+.grid-cols-2 {
+  grid-template-columns: minmax(0,1.2fr) minmax(0,0.4fr);
+}
+</style>
 
 ---
 
@@ -490,12 +546,18 @@ assume that the source is
 ```
 
 ---
+layout: center
+---
+
+break
+
+---
 
 ## Lexical Errors
 
 What if the input was
 ```
-@##^ ()
+@##^()
 ```
 
 to handle that we add
@@ -585,6 +647,8 @@ The only operator left is the slash `/`
 
 Why is it different than the single and double character operators?
 
+What lexemes or tokens start with a `/`
+
 ---
 
 ## Longer lexemes
@@ -605,6 +669,8 @@ in scanToken()
     // default:
 ```
 
+What is a `//` in lox
+
 ---
 
 ## Longer lexemes
@@ -616,6 +682,17 @@ The same as other two character operators, but if we see another `/` we skip unt
         if (isAtEnd()) return '\0';
         return source.charAt(current);
     }
+```
+
+let's run through this with
+```
+// cmnt
+line
+```
+and 
+
+```
+// cmnt
 ```
 
 ---
@@ -650,7 +727,7 @@ layout: center
 ```
 // comment
 (( )){} //group
-!*+-/=<> <= ==
+!*+-/ =<> <= ==
 ```
 
 ---
@@ -684,13 +761,17 @@ A string needs to
 2. end with the next `"`
 3. be multiline, because why not
 
+---
+
+## Strings
+
 ```
 lox/Scanner.java
 add after scanToken()
 ```
-``` java
+```java
 private void string() {
-    while (peek() != '_' && ___) {
+    while (peek() != '_' && ___) { // when do we end a string
         if (peek() == '\n') line++;
         advance();
     }
@@ -741,7 +822,9 @@ replace 1 line
         break;
 ```
 
-Guess why this is in default
+Guess why this is in default instead of a case
+
+how would you support `113`, `213` and `321`
 
 ---
 
@@ -791,6 +874,21 @@ private char peekNext() {
     return source.charAt(current + 1);
 }
 ```
+
+---
+layout: center
+---
+
+Let's run through
+```
+4123 "21
+44
+"
+```
+
+---
+
+break
 
 ---
 
@@ -910,6 +1008,12 @@ So now that we can detect identifiers, we can check if the identifier is a keywo
 
 The easiest way of doing so being in a dictionary
 
+---
+layout: two-cols
+---
+
+## Identifiers and keywords
+
 ```
 lox/Scanner.java
 in class Scanner
@@ -926,6 +1030,9 @@ static {
     keywords.put("for", FOR);
     keywords.put("fun", FUN);
     keywords.put("if", IF);
+```
+::right::
+```java
     keywords.put("nil", NIL);
     keywords.put("or", OR);
     keywords.put("print", PRINT);
@@ -937,6 +1044,16 @@ static {
     keywords.put("while", WHILE);
 }
 ```
+
+<style>
+.slidev-code {
+    font-size: 12px !important;
+}
+
+.grid-cols-2 {
+  grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+}
+</style>
 
 ---
 
@@ -960,3 +1077,14 @@ addToken(type);
 
 # Done
 compile and run `Lox` on some source code in REPL mode
+
+---
+layout: center
+---
+
+# Run through
+
+```
+var x = 10.5 + _abc123;
+print "value = " + x;
+```
