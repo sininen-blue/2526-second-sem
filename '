@@ -352,7 +352,7 @@ def solve(maze, wall, start, end):
 
 
     ## Pre, add to path
-    ## Recurse, try each direction, if end, return true
+    ## Recurse, try each direction
     ## Post, remove from path
 ```
 
