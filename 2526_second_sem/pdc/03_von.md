@@ -361,6 +361,8 @@ for (i = 0; i < 1000; i++) {
 If we assume that we have 2 instead of 1 adder unit, we can effectively double the throughput of our additions
 
 ---
+layout: center
+---
 
 # Break
 before quiz
