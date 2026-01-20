@@ -103,7 +103,7 @@ The von neumman architecture **works**, but it's flaws have existed since the be
 And so people have done modifications to it to make it faster
 
 Mainly in three ways
-1. to not pull in as much data
+1. to not travel the path as much
 2. to pull more data at once
 3. to run multiple instructions at once
 
@@ -112,7 +112,7 @@ layout: center
 ---
 
 # Caching
-to not pull in as much data
+to not travel the path as much
 
 ---
 layout: two-cols
