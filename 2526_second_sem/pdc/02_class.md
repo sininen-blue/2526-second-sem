@@ -10,7 +10,7 @@ lineNumbers: true
 
 ## Introduction
 
-In this course we'll be using MPI which falls under a specific type of parallel computing
+In this course we'll be using **MPI** which falls under a specific type of parallel computing
 
 But there are also other APIs that use other architectures to achieve parallelism
 
@@ -61,6 +61,8 @@ layout: center
 # Instruction Classifications
 
 ---
+layout: two-cols
+---
 
 ## Multiple instruction multiple data
 
@@ -69,15 +71,24 @@ Where each core is considered a normal processor,
 - ALUs,
 - and can operate **independently**
 
-This is called a Multiple-Instruction Multiple-Data (MIMD) system
+This is called a *Multiple-Instruction Multiple-Data* (**MIMD**) system
 
 You can do addition **and** multiplication on different sets of data at the same time
 
+::right::
+
+<img class="bg-white mx-auto rounded w-3/4 mt-4 mb-4" src="./images/02/mimd.png">
+
+---
+layout: two-cols
 ---
 
 ## Single instruction multiple data
 
-Where each core is *does not* have its own control unit
+<img class="bg-white mx-auto rounded w-3/4 mt-4 mb-4" src="./images/02/simd.png">
+
+::right::
+Where each core is **does not** have its own control unit
 - Each core share a single control unit
 - but they can access their own memory
 
@@ -99,8 +110,9 @@ For example
 ```c
 int x[n], y[n], z[n];
 
-for (___) {
-    ___
+for (i = 0; i < n; i++) {
+    z[i] = x[i] + y[i];
+}
 ```
 
 ---
