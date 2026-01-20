@@ -29,6 +29,7 @@ layout: two-cols
 
 ## The von Neumann Architecture
 
+Inside the CPU
 - control unit: what instruction to do
 - data path: executing the instructions
 
@@ -75,7 +76,7 @@ This includes things like
 - descriptors of resources (files, network connections, etc)
 - etc
 
-Most operating systems, and all modern ones, are **multitasking**
+Most operating systems, and all modern ones, are **multitasking**. Even in single core von Neumann architecture systems
 
 ---
 
@@ -114,6 +115,8 @@ layout: center
 to not pull in as much data
 
 ---
+layout: two-cols
+---
 
 ## Caching
 
@@ -123,8 +126,34 @@ The most widely used modification
 
 There are two ways to make factory faster
 
-1. Widen the road
-2. Move the factory or warehouse
+1. Widen the road (pull more data)
+2. Move the factory or warehouse (store data closer)
+
+::right::
+
+<img class="mx-auto rounded w-3/4 mt-20" src="./images/03/cache.png">
+
+---
+layout: two-cols
+---
+
+## Caching
+
+A **cache** is a collection of memory locations that are **faster** to access than main memory
+
+> So which data should we store in cache?
+
+There is a tendency for most programs to access the same data and instructions that are **close** to each other. This is called **locality**
+
+A running program is likely to access data that is nearby (**spatial** locality) in the near future (**temporal** locality)
+
+::right::
+
+To exploit this, a cache system stores data and instructions that are likely to be used again soon in the cache
+
+So a **block** of data is pulled from main memory to the cache, usually called a **cache block** or a **cache line**
+
+<img class="bg-white mx-auto rounded w-3/4 mt-4 mb-4" src="./images/03/cachemap.png">
 
 ---
 
@@ -141,16 +170,21 @@ for(i = 0; i < 1000; i++) {
 }
 ```
 
-The operating system uses **locality** to also pull in nearby data when running this program
+Arrays are blocks of contiguous memory
 
-Arrays are blocks of contiguous memory, so it makes sense to pull in more than one value at a time
+So it's very likely that when we access `z[0]`, we'll also access `z[1], z[2], ...` after
 
-It pulls in a **cache block** or a **cache line**
+So it pulls in a **cache block** or a **cache line**
 
+---
+layout: two-cols
 ---
 
 ## Cache hits and misses
 
+<img class="mx-auto rounded w-4/4 mt-4 mb-4" src="./images/03/cache_hits.png">
+
+::right::
 When the CPU needs to access an instruction, it first checks the cache
 
 If it's not in there, it's a **cache miss**
@@ -162,10 +196,28 @@ If it is in there, it's a **cache hit**
 Then it can get it quickly from the cache
 
 ---
+layout: two-cols
+---
+
+## Cache mapping
+
+> When we pull a cache line from main memory to the cache, where do we put it?
+
+There are three main ways to do this
+1. Fully associative - place it **anywhere**
+2. Direct mapped - place it in **one specific** location
+3. n-way set associative - place it in **one of n** locations (i.e. 2-way means 2 possible locations)
+
+And whenever we need to evict a cache line, we need a **replacement policy**, usually **LRU** (least recently used)
+
+::right::
+<img class="bg-white mx-auto rounded w-4/4 mt-4 mb-4" src="./images/03/cachemap.png">
+
+---
 
 ## Fuller Example
 
-Note that the CPU cache is not controlled by the programmer, but knowledge of it allows us to have some indirect control of it
+Note that the CPU cache is **not controlled** by the programmer, but knowledge of it allows us to have some indirect control of it
 
 For example, in C, we store 2d arrays in row-major order
 ```c
@@ -195,7 +247,7 @@ to pull more data at once
 
 ## Virtual Memory
 
-Assume you need to open another program, but you don't have enough RAM. Or you're running a program with a dataset too large to fit in RAM
+Assume you need to open *another program*, but you **don't have enough RAM**. Or you're running a program with a dataset **too large** to fit in RAM
 
 Virtual memory allows the operating system to use disk space as "*extra RAM*"
 
@@ -219,6 +271,8 @@ Using multiple functional units to **simultaneously** execute instructions
 There are two main ways to speed up instruction execution
 1. Pipelining
 2. Multiple issue
+
+<img class="mx-auto rounded w-1/3" src="./images/03/pipeline_1.jpg">
 
 ---
 layout: center
@@ -296,7 +350,7 @@ The loop will take how long now?
 Some processors (most modern ones) can issue multiple instructions at once
 
 In our previous example
-```
+```c
 float x[1000], y[1000], z[1000];
 
 for (i = 0; i < 1000; i++) {
@@ -305,3 +359,8 @@ for (i = 0; i < 1000; i++) {
 ```
 
 If we assume that we have 2 instead of 1 adder unit, we can effectively double the throughput of our additions
+
+---
+
+# Break
+before quiz
