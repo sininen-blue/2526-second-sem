@@ -27,6 +27,7 @@ The concept of sending information over a distance predates modern technology by
 Phiedippides, a Greek *messenger*
 
 - is said to have run from Marathon to Athens (about 26 miles) to deliver news of a military victory in 490 BC.
+<small>according to legend</small>
 
 ::right::
 
@@ -58,7 +59,7 @@ China, even before it's unification, was an incredibly large set of territories.
 
 <img class="mx-auto rounded w-1/3" src="./images/03/chinese_couriers.jpg"/>
 
-And so a more organized postal system was needed and created, with the first mentions dating back to the Shang and Zhou dynasties (1600-256 BC).
+And so a more organized postal system was needed and created, with the first mentions being attributed to the Shang and Zhou dynasties (1600-256 BC).
 
 This included an **upgrade** in hardware, software, and network that allowed for more efficient communication.
 
@@ -111,7 +112,7 @@ And even before then, **train** systems allowed for much faster communication ac
 layout: center
 ---
 
-# Which of the components of ICT did not change?
+# Which of the components of ICT changed the least?
 
 ---
 
@@ -166,3 +167,15 @@ The speed of modern ICT systems are so much faster than traditional systems that
 - It's not just asking your boss for directions, it's giving real-time updates during emergencies.
 - Press conferences live streamed minutes after a scandal
 - It's videos reaching billions of people in hours
+
+---
+
+## The difference between the telegraph and the internet
+
+The telegraph was a revolutionary technology in its time, but it was limited in its capabilities. It was **scarce**
+
+And so it was **only** used for important messages.
+
+The internet, on the other hand, is **abundant**. It's available to anyone with a connection, and can be used for a wide range of purposes.
+
+This greater participation allows for many things, both good and bad, that were not possible before.
