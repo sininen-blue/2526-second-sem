@@ -8,130 +8,221 @@ lineNumbers: true
 
 ---
 
-most system software makes some use of parallelism
+## About Software
 
-However, there are still many programs that can only make use of
-a single core, and there are many programmers with no experience writing par-
-allel programs. This is a problem, because we can no longer rely on hardware
-and compilers to provide a steady increase in application performance
+- At this point in 2026, most programs have some support for parallelism
+- However, many programs are still written to run serially
 
----
+> JavaScript, one of the worlds most popular languages, is single-threaded*
 
-First, some terminology. Typically when we run our shared-memory programs,
-we’ll start a single process and fork multiple threads. So when we discuss shared-
-memory programs, we’ll talk about threads carrying out tasks. On the other hand,
-when we run distributed-memory programs, we’ll start multiple processes, and we’ll
-talk about processes carrying out tasks
+<small>*Browsers and Runtimes have APIs to let JS have parallelism</small>
+
+This is a problem because we can't rely on hardware and compilers to provide a **steady increase** in application performance anymore
+
+<img class="mx-auto rounded w-3/5" src="./images/05/graph.png"/>
 
 ---
+layout: two-cols
+---
 
-## Caveats
+## SPMD
 
-Second, we’ll mainly focus on what’s often called single program, multiple
-data, or SPMD, programs. Instead of running a different program on each core,
-SPMD programs consist of a single executable that can behave as if it were multiple
-different programs through the use of conditional branches. For example
+We’ll mainly focus on *single program, multiple data*, or **SPMD**, programs. 
+
+Instead of running a different program on each core, 
+
+> SPMD have one executable that acts like multiple different programs 
+
+It does this through conditionals
+
+- Note that this means it can do both task parallelism and data parallelism
+
+::right::
+```
+if (I'm thread 0) {
+    do task A
+} else if (I'm thread 1) {
+    do task B
+} else {
+    do task C
+}
+```
 
 ---
 
 ## Coordination
 
-In a very few cases, obtaining excellent parallel performance is trivial. For example,
-suppose we have two arrays and we want to add them
+Sometimes getting good parallel performance is easy. Recall the two array addition example
 
-Although we might wish for a term that’s a little easier to pronounce, recall that
-the process of converting a serial program or algorithm into a parallel program is
-often called parallelization. Programs that can be parallelized by simply dividing
-the work among the processes/threads are sometimes said to be embarrassingly
-parallel. This is a bit unfortunate, since it suggests that programmers should be
-embarrassed to have written an embarrassingly parallel program, when, to the
-contrary, successfully devising a parallel solution to any problem is a cause for
-great rejoicing
+```c
+double x[N], y[N], z[N];
+for (int i = 0; i < N; i++) {
+    z[i] = x[i] + y[i];
+}
+```
 
+Since the process of converting a program into parallel is called **parallelization**. Programs that can be parallelized by simply dividing
+the work is sometimes called
+
+> [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel). 
+
+---
+layout: center
 ---
 
 # Shared memory
+communication in shared memory systems
+
+Recall that shared memory systems can have *shared* and *private* variables
+
+Communication is primarily done through shared variables
 
 ---
 
 ## Dynamic and static threads
 
-In many environments, shared-memory programs use dynamic threads. In this
-paradigm, there is often a master thread and at any given instant a (possibly empty)
-collection of worker threads
+Most shared-memory programs use **dynamic threads**. 
 
-The master thread typically waits for work requests—
-for example, over a network—and when a new request arrives, it forks a worker
-thread, the thread carries out the request, and when the thread completes the work,
-it terminates and joins the master thread. This paradigm makes efficient use of sys-
-tem resources, since the resources required by a thread are only being used while the
-thread is actually running.
+In this system
+- there is a **master thread**, and
+- a (possibly empty) collection of **worker threads**.
 
-An alternative to the dynamic paradigm is the static thread paradigm. In this
-paradigm, all of the threads are forked after any needed setup by the master thread
-and the threads run until all the work is completed. After the threads join the master
-thread, the master thread may do some cleanup (e.g., free memory), and then it also
-terminates. In terms of resource usage, this may be less efficient: if a thread is idle,
-its resources (e.g., stack, program counter, and so on) can’t be freed. However, fork-
-ing and joining threads can be fairly time-consuming operations
+The master thread waits for work, then forks a worker thread to do the work
+
+When the worker thread completes, it terminates and joins the master thread
+
+This results in more efficient use of system resources, since only working threads use resources
+
+---
+
+## Static threads
+
+An alternative to the dynamic paradigm is the **static thread** paradigm. 
+
+In this system:
+- all of the threads are forked after any needed setup by the master thread
+- and the threads run until all the work is completed. 
+
+After the threads join the master thread, the master thread may do some cleanup, and then it also terminates. 
+
+This may be less efficient: if a thread is idle, its resources can’t be freed. 
+
+But forking and joining threads can be fairly time-consuming operations, so there's potentially a performance gain.
 
 ---
 
 ## Non determinsim
 
-In any MIMD system in which the processors execute asynchronously it is likely that
-there will be nondeterminism. A computation is nondeterministic if a given input
-can result in different outputs. If multiple threads are executing independently, the
-relative rate at which they’ll complete statements varies from run to run, and hence
-the results of the program may be different from run to run. As a very simple example,
-suppose we have two threads, one with ID or rank 0 and the other with ID or rank 1.
-Suppose also that each is storing a private variable my_x, thread 0’s value for my_x is 7,
-and thread 1’s is 19. Further, suppose both threads execute the following code
+In any MIMD system with async cores, it is likely that there will be **nondeterminism**. 
 
-dead guy example
+> if a given input can result in different outputs. 
 
----
+Usually occurs because multiple threads have varied execution timing and so if we assume two threads, with `7` and `19` as `my_x`
 
-When threads or processes attempt to simultaneously access a
-shared resource, and the accesses can result in an error, we often say the program
-has a race condition, because the threads or processes are in a “race” to carry out
-an operation. That is, the outcome of the computation depends on which thread wins
-the race. In our example, the threads are in a race to execute x += my_val. In this case,
-unless one thread completes x += my_val before the other thread starts, the result will
-be incorrect. So we need for each thread’s operation x += my_val to be atomic
+```
+printf("Thread %d > my_x = %d\n", my_rank, my_x);
+```
 
----
+Could output
 
-A block of
-code that can only be executed by one thread at a time is called a critical section,
-and it’s usually our job as programmers to ensure mutually exclusive access to a
-critical section. In other words, we need to ensure that if one thread is executing the
-code in the critical section, then the other threads are excluded.
+```
+Thread 0 > my_x = 7
+Thread 1 > my_x = 19
+```
+
+Depending on which thread executes first during that run
+
+This is also called a **race condition**
 
 ---
 
-The most commonly used mechanism for ensuring mutual exclusion is a mutual
-exclusion lock or mutex, or simply lock
+## Non Determinism
+
+Usually, non determinism isn't that large of a problem and the order of outputs doesn't matter
+
+Sometimes, it leads to people dying
+
+[youtube.com/watch?v=41Gv-zzICIQ](https://www.youtube.com/watch?v=41Gv-zzICIQ)
 
 ---
 
-Also note that the use of a mutex enforces serialization of the critical section.
-Since only one thread at a time can execute the code in the critical section, this code
-is effectively serial. Thus we want our code to have as few critical sections as possible,
-and we want our critical sections to be as short as possible.
-There are alternatives to mutexes. In busy-waiting, a thread enters a loop, whose
-sole purpose is to test a condition. In our example, suppose there is a shared variable
-ok_for_1 that has been initialized to false. Then something like the following code
-can ensure that thread 1 won’t update x until after thread 0 has updated
+## Atomic operations
+
+To prevent nondeterminism, we want certain operations to be *"atomic"*
+
+Meaning that they are indivisible and uninterruptible, where after the thread has completed the operation, it appears that no other thread has executed during that time 
+
+There are a few ways of doing this, one is simply making sure that **only one** thread can execute a block at a time
+
+The section of code is called a **critical section** and we use **mutual exclusion** to ensure that only one thread can execute the critical section at a time
 
 ---
 
-**Semaphores** are similar to mutexes,
-although the details of their behavior are slightly different, and there are some types of
-thread synchronization that are easier to implement with semaphores than mutexes.
-A monitor provides mutual exclusion at a somewhat higher level: it is an object
-whose methods can only be executed by one thread at a time
+## Mutex
 
+One of the simplest ways of doing so is using a **mutual exclusion lock**, or **mutex**, or simply
+
+> lock
+
+marking a block of code with a lock "protects" that section, and the thread must *have the mutex*. And when it's done, it *releases* the mutex
+
+```
+my_val = get_val(my_rank);
+Lock(&add_my_val_lock);
+x += my_val;
+Unlock(&add_my_val_lock);
+```
+
+Given `process 0` and `process 1`, which one will execute the critical section first?
+
+---
+layout: center
+---
+
+## Mutex
+
+A mutex **enforces** serialization for the critical section, which means we want as few critical sections as possible
+
+---
+layout: two-cols-header
+---
+
+## Alternatives to mutexes
+
+::left::
+- Busy-waiting
+
+Simply have a thread enter a loop which tests a condition
+
+```
+my_val = get_val(my_rank);
+if (my_rank == 1) {
+    while (!ok_for_1) {
+        // do nothing
+    }
+x += my_val;
+}
+if (my_rank == 0) {
+    ok_for_1 = true;
+}
+```
+
+::right::
+
+- Semaphores, usually consisting of a `counter` and the operations `wait` and `signal`
+
+The combination of these two operations can be used to ensure mutual exclusion
+
+```
+counter = 1 (printer available)
+
+Thread A: wait() -> c becomes 0 -> print
+Thread B: wait() -> c = 0 -> wait
+Thread C: wait() -> c = 0 -> wait
+
+Thread A finishes -> signal() -> counter = 1
+Thread B or C can now proceed
+```
 ---
 
 ## Thread safety
