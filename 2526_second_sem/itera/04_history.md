@@ -144,7 +144,7 @@ Silicon integrated circuits (ICs) allowed multiple transistors to be placed on a
 
 - Developed by *Jack Kilby and Robert Noyce*
 
-ICs **did not** allow for more computation per unit, but they did allow for **smaller individual units** packaged together.
+ICs **did not** allow for more computation per unit, but they did allow for **smaller individual units** packaged together. This was achieved by placing multiple transistors and connections on a single piece of silicon
 
 > More transistors = more computing power
 
