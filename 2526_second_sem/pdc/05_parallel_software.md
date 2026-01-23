@@ -19,14 +19,15 @@ lineNumbers: true
 
 This is a problem because we can't rely on hardware and compilers to provide a **steady increase** in application performance anymore
 
-<img class="mx-auto rounded w-3/5" src="./images/05/graph.png"/>
+<img class="mx-auto rounded w-1/3" src="./images/01/moores_law.png"/>
 
 ---
-layout: two-cols
+layout: two-cols-header
 ---
 
 ## SPMD
 
+::left::
 We’ll mainly focus on *single program, multiple data*, or **SPMD**, programs. 
 
 Instead of running a different program on each core, 
@@ -35,13 +36,13 @@ Instead of running a different program on each core,
 
 It does this through conditionals
 
-- Note that this means it can do both task parallelism and data parallelism
+- Note that this means it can do **both** task parallelism and data parallelism
 
 ::right::
-```
-if (I'm thread 0) {
+```c
+if (Im thread 0) {
     do task A
-} else if (I'm thread 1) {
+} else if (Im thread 1) {
     do task B
 } else {
     do task C
@@ -50,7 +51,7 @@ if (I'm thread 0) {
 
 ---
 
-## Coordination
+## Parallelization
 
 Sometimes getting good parallel performance is easy. Recall the two array addition example
 
@@ -61,10 +62,10 @@ for (int i = 0; i < N; i++) {
 }
 ```
 
-Since the process of converting a program into parallel is called **parallelization**. Programs that can be parallelized by simply dividing
-the work is sometimes called
+Since the process of converting a program into parallel is called **parallelization**. 
 
-> [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel). 
+Programs that can be parallelized by simply dividing the work is sometimes called
+ [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel). 
 
 ---
 layout: center
@@ -105,15 +106,15 @@ In this system:
 
 After the threads join the master thread, the master thread may do some cleanup, and then it also terminates. 
 
-This may be less efficient: if a thread is idle, its resources can’t be freed. 
+This **may** be less efficient: if a thread is idle, its resources can’t be freed. 
 
 But forking and joining threads can be fairly time-consuming operations, so there's potentially a performance gain.
 
 ---
 
-## Non determinsim
+## Non determinism
 
-In any MIMD system with async cores, it is likely that there will be **nondeterminism**. 
+In any MIMD system with async cores, especially shared memory systems, it is likely that there will be **nondeterminism**. 
 
 > if a given input can result in different outputs. 
 
@@ -140,7 +141,7 @@ This is also called a **race condition**
 
 Usually, non determinism isn't that large of a problem and the order of outputs doesn't matter
 
-Sometimes, it leads to people dying
+However, race conditions can lead to very large problems that aren't easily detected
 
 [youtube.com/watch?v=41Gv-zzICIQ](https://www.youtube.com/watch?v=41Gv-zzICIQ)
 
@@ -166,7 +167,7 @@ One of the simplest ways of doing so is using a **mutual exclusion lock**, or **
 
 marking a block of code with a lock "protects" that section, and the thread must *have the mutex*. And when it's done, it *releases* the mutex
 
-```
+```c
 my_val = get_val(my_rank);
 Lock(&add_my_val_lock);
 x += my_val;
@@ -181,7 +182,9 @@ layout: center
 
 ## Mutex
 
-A mutex **enforces** serialization for the critical section, which means we want as few critical sections as possible
+A mutex **enforces** serialization for the critical section, 
+
+which means we want as few critical sections as possible
 
 ---
 layout: two-cols-header
@@ -192,15 +195,13 @@ layout: two-cols-header
 ::left::
 - Busy-waiting
 
-Simply have a thread enter a loop which tests a condition
+Simply have a thread enter a **loop** which tests a condition
 
-```
+```c
 my_val = get_val(my_rank);
 if (my_rank == 1) {
-    while (!ok_for_1) {
-        // do nothing
-    }
-x += my_val;
+    while (!ok_for_1) {}
+    x += my_val;
 }
 if (my_rank == 0) {
     ok_for_1 = true;
@@ -209,12 +210,14 @@ if (my_rank == 0) {
 
 ::right::
 
-- Semaphores, usually consisting of a `counter` and the operations `wait` and `signal`
+- Semaphores
+
+Usually consisting of a `counter` and the operations `wait` and `signal`
 
 The combination of these two operations can be used to ensure mutual exclusion
 
-```
-counter = 1 (printer available)
+```c
+counter = 1 // printer available
 
 Thread A: wait() -> c becomes 0 -> print
 Thread B: wait() -> c = 0 -> wait
@@ -229,9 +232,9 @@ Thread B or C can now proceed
 
 Most of the time, you can use any functions you like in a parallel program.
 
-However, some functions were written specifically for use in serial programs,
+However, some functions were written *specifically* for use in serial programs,
 
-For `C`, note any function that uses static local variables like the function `strtok` which splits a string into sub stirngs.
+For `C`, any function that static local variables, like the function `strtok` which splits a string into sub stirngs could cause problems
 
 `strtok` internally uses a static variable
 
@@ -248,6 +251,8 @@ If multiple threads call `strtok` at the same time, they will interfere with eac
 
 This is an example of a function that is not **thread safe**
 
+---
+layout: center
 ---
 
 # Distributed memory
@@ -287,7 +292,7 @@ if (my_rank == 1) {
 
 1. this is an SPMD program, same executable for both processes
 2. `message` refers to *different* blocks of memory
-3. we're assuming proc 0 can write to stdout
+3. we're assuming `proc 0` can write to stdout
 
 ---
 
@@ -309,7 +314,7 @@ The most widely used message passing API is **MPI**
 
 ---
 
-## one sided communication
+## One sided communication
 
 One process must call a send function, and that send needs to be matched by a receive function in another process.
 
