@@ -227,40 +227,96 @@ Thread B or C can now proceed
 
 ## Thread safety
 
-In many, if not most, cases, parallel programs can call functions developed for use in
-serial programs, and there won’t be any problems. However, there are some notable
-exceptions. The most important exception for C programmers occurs in functions that
-make use of static local variables. Recall that ordinary C local variables—variables
-declared inside a function—are allocated from the system stack. Since each thread
-has its own stack, ordinary C local variables are private. However, recall that a static
-variable that’s declared in a function persists from one call to the next
+Most of the time, you can use any functions you like in a parallel program.
 
+However, some functions were written specifically for use in serial programs,
 
-strtok
+For `C`, note any function that uses static local variables like the function `strtok` which splits a string into sub stirngs.
 
-A function such as strtok is not thread safe. This means that if it is used in
-a multithreaded program, there may be errors or unexpected results. When a block
-of code isn’t thread safe, it’s usually because different threads are accessing shared
-data. Thus, as we’ve seen, even though many serial functions can be used safely in
-multithreaded programs—that is, they’re thread safe—programmers need to be wary
-of functions that were written exclusively for use in serial programs.
+`strtok` internally uses a static variable
+
+```c
+char s[] = "a,b,c";
+char *token = strtok(s, ",");
+while (token != NULL) {
+    printf("%s\n", token);
+    token = strtok(NULL, ",");
+}
+```
+
+If multiple threads call `strtok` at the same time, they will interfere with each other
+
+This is an example of a function that is not **thread safe**
 
 ---
 
 # Distributed memory
+communication in distributed memory systems
+
+In distributed memory, each process only has access to its own memory
+
+Communication is done by sending and receiving messages
+
+Note that while distributed memory systems are traditionally clusters of computers, they can also be on a single computer with multiple processors
+
+---
+layout: two-cols-header
+---
+
+## Message passing
+
+::left::
+At minimum, message passing systems need two operations:
+- send
+- receive
+
+```c
+char message[100];
+
+my_rank = Get_rank();
+if (my_rank == 1) {
+    sprintf(message, "from 1");
+    Send(message, MSG_CHAR, 100, 0);
+} else if (my_rank == 0) {
+    Receive(message, MSG_CHAR, 100, 1);
+    printf("Process 0 received message: %s\n", message);
+}
+```
+
+::right::
+
+1. this is an SPMD program, same executable for both processes
+2. `message` refers to *different* blocks of memory
+3. we're assuming proc 0 can write to stdout
 
 ---
 
-message passing
+## Behavior of send and receive
+
+Depending on the API, the implementation, and the system, `Send` and `Receive` can have different behaviors
+
+The most common and simplest is **blocking**
+- `send` the message
+- `receive` the message
+
+But the `recieve`r will **block** until the message arrives
+
+There are a few other ways to communicate, like *collective* communication, such as **broadcast**.
+
+Or a **reduction**, where all processes contribute a value to a single result, like a sum
+
+The most widely used message passing API is **MPI** 
 
 ---
 
- one sided communication
+## one sided communication
 
----
+One process must call a send function, and that send needs to be matched by a receive function in another process.
 
-partiioned global address spaec language
+**one-sided communication** allows a single process to set the value of a variable in another process
 
----
+Usually done by **directly** modifying the memory of another process
 
-gpu programming
+This makes it *slightly easier*, reduce overhead from syncing, and reduce overhead from one of the functions.
+
+In practice, it's difficult to realize these benefits, and since there isn't any *explicit* communication, debugging is more difficult
