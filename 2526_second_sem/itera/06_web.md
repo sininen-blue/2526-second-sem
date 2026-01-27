@@ -128,6 +128,8 @@ The internet is the **infrastructure** that connects computers together.
 The web is a **service** that runs on top of the internet.
 
 ---
+layout: center
+---
 
 # How the web works
 
@@ -135,34 +137,149 @@ The web is a **service** that runs on top of the internet.
 
 ## Clients and servers
 
----
+The core parts of the web are computers either called **clients** or **servers**.
 
-## Tools
+<img class="mx-auto rounded w-1/3" src="./images/06/client_server.png"/>
 
-1. internet connection
-2. transmission control protocol/internet protocol (TCP/IP)
-3. domain name system
-4. hypertext transfer protocol (HTTP/HTTPS)
-5. files
+They are **both** computers, and can both be clients and servers at the same time. 
 
----
-layout: center
----
-
-## What happens when you type a URL into your browser?
+But for the purposes of this course, we'll treat them as static states
 
 ---
 
-## What happens exactly?
+## Client Server Interaction
+
+<img class="mx-auto rounded w-1/3" src="./images/06/client_server.png"/>
+
+1. The client sends a **request** to the server
+    - usually by using a piece of software called a **web browser**
+2. The server receives the request,
+    - note that a server is simply a computer
+    - in that computer there exists files
+    - when the server receives a request, it finds the requested file
+    - then it **responds** to the client with the file
+3. The client **receives** the response
+    - then the **web browser** displays the file to the user
+
+> try ctrl + s
+
+---
+
+## Other Tools Needed in the Web
+
+If we imagine the internet as a road, 
+
+- and on one end we have the **client** (your house)
+- and on another end, we have the **server** (a shop)
+
+To get **data** (goods) from the server (shop) to the client (your house), we need a few things:
+1. The road itself (*internet*)
+2. the transport mechanism, like walking, biking, driving (*TCP/IP*)
+3. The address of the destination (*DNS*)
+4. The language we use to ask for the goods (*HTTP/HTTPS*)
+5. The goods themselves (*files*)
+
+---
+
+## TCP IP
+
+Transmission Control Protocol / Internet Protocol is a **protocol** that defines how data is sent and received over the internet.
+
+It guarantees that data sent from one computer to another arrives intact and in the correct order.
 
 ---
 
 ## DNS
 
+Domain Name System is like the phonebook of the internet.
+
+It translates human-friendly domain names (like www.example.com) into IP addresses (like `142.250.190.78`)
+
+A DNS is already built into your operating system and web browser, so you don't have to worry about it.
+
+It's basically a website that tells your browser where to find other websites.
+
 ---
 
-## Packets
+## HTTP
+
+Hypertext Transfer Protocol is the protocol used for transferring web pages on the internet.
+
+When you type a URL into your web browser, it sends an HTTP request to the server hosting that website.
+
+This request is the **format** that both the client and server understand to communicate.
+
+It includes information like:
+- the method (GET, POST, etc)
+- headers (metadata about the request)
+- body (data being sent, if any)
+
+---
+layout: center
+---
+
+## So what happens exactly?
 
 ---
 
-## Basics of HTTP
+1. You type in a URL in your web browser
+
+Your browser then goes to a **DNS server** to find the IP address of the server that hosts the website
+
+2. The browser gets that IP address back, then it sends an **HTTP request** to that IP address
+
+When it's being sent along, it's using the **TCP/IP** protocol to get there
+
+3. The server then responds with a 200 OK, 
+
+Meaning that file exists and you can look at it, 
+
+Then starts sending the website's file back to your browser in small chunks called packets
+
+4. The browser assembles those small chunks into a complete page and displays it to you
+
+---
+
+# Case Study
+Instapay
+
+---
+
+## QR PH
+
+a national standardized qr system mandated by **Bangko Sentral ng Pilipinas**
+
+This is the **LOOK** of the QR, and this standard allows **interoperability** between different banks and payment service providers
+
+## Instapay
+
+Is a real-time fund transfer service owned by **BancNet**
+
+---
+
+## What happens
+
+When you scan the QR code using your bank's mobile app,
+
+It reads the data encoded in the QR code, which contains:
+- the recipient's bank information
+- the amount to be transferred
+- a reference note
+- etc
+
+Then your bank's app sends an **HTTP request** to BancNet's server to initiate the transfer, **with** that information
+
+BancNet's server then processes the request, verifies the details, and initiates the fund transfer between the banks involved.
+
+Then BancNet's server responds back to your bank's app with a confirmation of the transaction status
+
+Then your bank's app displays the confirmation to you
+
+---
+
+1. send
+2. receive
+3. status
+4. process
+5. respond
+6. display
