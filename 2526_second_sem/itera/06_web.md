@@ -120,6 +120,8 @@ Try out
 ```
 
 ---
+layout: center
+---
 
 ## The internet vs The web
 
@@ -139,18 +141,21 @@ layout: center
 
 The core parts of the web are computers either called **clients** or **servers**.
 
-<img class="mx-auto rounded w-1/3" src="./images/06/client_server.png"/>
+<img class="mx-auto bg-white p-4 rounded w-2/3" src="./images/06/client_server.png"/>
 
 They are **both** computers, and can both be clients and servers at the same time. 
 
 But for the purposes of this course, we'll treat them as static states
 
 ---
+layout: two-cols-header
+---
 
 ## Client Server Interaction
 
-<img class="mx-auto rounded w-1/3" src="./images/06/client_server.png"/>
+<img class="mx-auto bg-white p-4 rounded w-1/3 mb-4" src="./images/06/client_server.png"/>
 
+::left::
 1. The client sends a **request** to the server
     - usually by using a piece of software called a **web browser**
 2. The server receives the request,
@@ -158,6 +163,8 @@ But for the purposes of this course, we'll treat them as static states
     - in that computer there exists files
     - when the server receives a request, it finds the requested file
     - then it **responds** to the client with the file
+
+::right::
 3. The client **receives** the response
     - then the **web browser** displays the file to the user
 
@@ -167,12 +174,12 @@ But for the purposes of this course, we'll treat them as static states
 
 ## Other Tools Needed in the Web
 
-If we imagine the internet as a road, 
+If we imagine the internet as a **road**, 
 
 - and on one end we have the **client** (your house)
 - and on another end, we have the **server** (a shop)
 
-To get **data** (goods) from the server (shop) to the client (your house), we need a few things:
+To get **data** (*goods*) from the server (*shop*) to the client (*your house*), we need a few things:
 1. The road itself (*internet*)
 2. the transport mechanism, like walking, biking, driving (*TCP/IP*)
 3. The address of the destination (*DNS*)
@@ -193,19 +200,27 @@ It guarantees that data sent from one computer to another arrives intact and in 
 
 Domain Name System is like the phonebook of the internet.
 
-It translates human-friendly domain names (like www.example.com) into IP addresses (like `142.250.190.78`)
+It translates human-friendly domain names 
+
+- like www.example.com
+
+into IP addresses 
+
+- like `142.250.190.78`
 
 A DNS is already built into your operating system and web browser, so you don't have to worry about it.
 
 It's basically a website that tells your browser where to find other websites.
 
+[howdns.works/ep1/](https://howdns.works/ep1/)
+
 ---
 
 ## HTTP
 
-Hypertext Transfer Protocol is the protocol used for transferring web pages on the internet.
+**Hypertext Transfer Protocol** is the protocol used for transferring web pages on the internet.
 
-When you type a URL into your web browser, it sends an HTTP request to the server hosting that website.
+When you type a URL into your web browser, it sends an **HTTP request** to the server hosting that website.
 
 This request is the **format** that both the client and server understand to communicate.
 
@@ -221,6 +236,8 @@ layout: center
 ## So what happens exactly?
 
 ---
+
+## Process
 
 1. You type in a URL in your web browser
 
@@ -239,15 +256,21 @@ Then starts sending the website's file back to your browser in small chunks call
 4. The browser assembles those small chunks into a complete page and displays it to you
 
 ---
+layout: center
+---
 
 # Case Study
 Instapay
 
 ---
 
+## QR Code
+
+A way to **encode data** in a visual format that can be easily scanned and read by devices like smartphones.
+
 ## QR PH
 
-a national standardized qr system mandated by **Bangko Sentral ng Pilipinas**
+A national standardized qr system mandated by **Bangko Sentral ng Pilipinas**
 
 This is the **LOOK** of the QR, and this standard allows **interoperability** between different banks and payment service providers
 
@@ -257,7 +280,7 @@ Is a real-time fund transfer service owned by **BancNet**
 
 ---
 
-## What happens
+## What happens when you scan
 
 When you scan the QR code using your bank's mobile app,
 
@@ -265,21 +288,31 @@ It reads the data encoded in the QR code, which contains:
 - the recipient's bank information
 - the amount to be transferred
 - a reference note
-- etc
+- etc.
 
 Then your bank's app sends an **HTTP request** to BancNet's server to initiate the transfer, **with** that information
 
-BancNet's server then processes the request, verifies the details, and initiates the fund transfer between the banks involved.
+---
 
-Then BancNet's server responds back to your bank's app with a confirmation of the transaction status
+## Server Process
 
-Then your bank's app displays the confirmation to you
+
+**BancNet's server** then **processes** the request, verifies the *details*, and initiates the fund transfer between the banks involved.
+
+Then BancNet's server **responds** back to your bank's app with a confirmation of the transaction status
+
+Then your bank's app **receives** that data 
+
+And finally, **displays** the confirmation to you
 
 ---
 
+## Big Picture
+
 1. send
-2. receive
-3. status
-4. process
-5. respond
-6. display
+2. receive and send status
+3. process
+4. respond
+5. display
+
+If any of these steps fail, the status of the transaction will depend on which step failed
