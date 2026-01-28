@@ -46,6 +46,8 @@ A **network switch** is a special computer that acts like a traffic controller.
 
 So to send a message from A to B, then A sends the message to the switch, and the switch forwards it to B.
 
+These are sent using something called a **mac address** which is a unique identifier for each computer in the network.
+
 ---
 
 ## A network of networks
@@ -74,7 +76,7 @@ In reality, this approach to connecting computers present two major problems:
 
 To solve this we connect a **local** network (meaning computers from one switch) using something called a **router**
 
-The router acts like a post office, it's main job is to send messages between networks (between other routers).
+The router acts like a post office, it's main job is to send messages between networks (between other routers). And it sends things based on an **ip address**.
 
 When a computer sends the router a message, the router reads the address of the destination computer, and decides the best way to send the message.
 
@@ -194,25 +196,25 @@ Transmission Control Protocol / Internet Protocol is a **protocol** that defines
 
 It guarantees that data sent from one computer to another arrives intact and in the correct order.
 
+> Method of transport and organization of data that both sides agree with
+
 ---
 
 ## DNS
 
 Domain Name System is like the phonebook of the internet.
 
-It translates human-friendly domain names 
+It **translates** human-friendly domain names 
 
-- like www.example.com
+`www.google.com` into IP addresses `142.250.190.78`
 
-into IP addresses 
-
-- like `142.250.190.78`
-
-A DNS is already built into your operating system and web browser, so you don't have to worry about it.
+A DNS is already **built into** your operating system and web browser, so you don't have to worry about it.
 
 It's basically a website that tells your browser where to find other websites.
 
 [howdns.works/ep1/](https://howdns.works/ep1/)
+
+> A way of finding the address of a server given its name
 
 ---
 
@@ -229,6 +231,10 @@ It includes information like:
 - headers (metadata about the request)
 - body (data being sent, if any)
 
+And other things
+
+> The language both sides agree to use
+
 ---
 layout: center
 ---
@@ -241,19 +247,43 @@ layout: center
 
 1. You type in a URL in your web browser
 
+<img class="mx-auto rounded w-1/5" src="./images/06/browser.png"/>
+
 Your browser then goes to a **DNS server** to find the IP address of the server that hosts the website
+
+<img class="mx-auto rounded w-1/5" src="./images/06/dns_lookup.png"/>
+
+---
+
+## Process
 
 2. The browser gets that IP address back, then it sends an **HTTP request** to that IP address
 
 When it's being sent along, it's using the **TCP/IP** protocol to get there
 
+<img class="mx-auto rounded w-1/3" src="./images/06/tcpip.png"/>
+
 3. The server then responds with a 200 OK, 
 
-Meaning that file exists and you can look at it, 
+Meaning that file **exists**, they've done the processing they needed to do ,and you can look at it, 
 
-Then starts sending the website's file back to your browser in small chunks called packets
 
-4. The browser assembles those small chunks into a complete page and displays it to you
+<img class="mx-auto rounded w-1/5" src="./images/06/200.jpg"/>
+
+---
+
+## Process
+
+Then starts sending the website's file back to your browser in small chunks called **packets**
+
+<img class="mx-auto rounded w-1/8 mb-4" src="./images/06/packets.png"/>
+
+4. The browser **assembles** those small chunks into a complete page and displays it to you
+
+<div class="flex flex-row gap-4 mt-2">
+    <img class="mx-auto rounded w-1/4" src="./images/06/tcpip.png"/>
+    <img class="mx-auto rounded w-1/4" src="./images/06/html.jpg"/>
+</div>
 
 ---
 layout: center
@@ -263,26 +293,57 @@ layout: center
 Instapay
 
 ---
+layout: two-cols-header
+---
 
-## QR Code
+## Terminology
+
+::left::
+### QR Code
 
 A way to **encode data** in a visual format that can be easily scanned and read by devices like smartphones.
 
-## QR PH
+> this is a way to store data visually
+
+### QR PH
 
 A national standardized qr system mandated by **Bangko Sentral ng Pilipinas**
 
-This is the **LOOK** of the QR, and this standard allows **interoperability** between different banks and payment service providers
+> This standard allows **interoperability** 
 
-## Instapay
+### Instapay
 
 Is a real-time fund transfer service owned by **BancNet**
 
+> This is a service that does the actual transfer of funds between banks
+
+::right::
+
+<div class="flex flex-col justify-center items-center gap-4 h-full">
+    <img class="bg-white mx-auto rounded w-1/2" src="./images/06/qr.svg"/>
+    <img class="bg-white p-2 mx-auto rounded w-1/2" src="./images/06/qrph.webp"/>
+    <img class="bg-white mx-auto rounded w-1/2" src="./images/06/instapay.png"/>
+</div>
+
+
+<style>
+.two-cols-header {
+  grid-template-columns: minmax(0,1.2fr) minmax(0,0.6fr);
+}
+</style>
+
+---
+layout: two-cols-header
 ---
 
 ## What happens when you scan
+::left::
+
+<img class="mx-auto rounded w-1/2 mt-4" src="./images/06/tonik.png"/>
 
 When you scan the QR code using your bank's mobile app,
+
+::right::
 
 It reads the data encoded in the QR code, which contains:
 - the recipient's bank information
@@ -290,27 +351,45 @@ It reads the data encoded in the QR code, which contains:
 - a reference note
 - etc.
 
-Then your bank's app sends an **HTTP request** to BancNet's server to initiate the transfer, **with** that information
+Then your bank's app sends an **HTTP request** to your bank's server with that information
 
+
+Then the bank app makes a request to BancNet's server to initiate the transfer **with** that information
+
+---
+layout: two-cols-header
 ---
 
 ## Server Process
 
+::left::
+
+
+<div class="flex flex-col justify-center items-center gap-4 h-full">
+    <img class="bg-white mx-auto rounded w-1/2" src="./images/04/datacenter.jpg"/>
+    <img class="bg-white mx-auto rounded w-1/3" src="./images/06/good.png"/>
+</div>
+
+
+::right::
 
 **BancNet's server** then **processes** the request, verifies the *details*, and initiates the fund transfer between the banks involved.
 
-Then BancNet's server **responds** back to your bank's app with a confirmation of the transaction status
+Then BancNet's server *responds* back to your bank's server with a **confirmation** of the transaction status, which it then forwards to your bank's app.
+
 
 Then your bank's app **receives** that data 
 
 And finally, **displays** the confirmation to you
+
+<img class="mx-auto rounded w-1/2 mt-4" src="./images/06/tonik-end.png"/>
 
 ---
 
 ## Big Picture
 
 1. send
-2. receive and send status
+2. receive
 3. process
 4. respond
 5. display
