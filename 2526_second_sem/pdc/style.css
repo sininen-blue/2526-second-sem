@@ -19,4 +19,9 @@
 	.col-right {
 		padding-left: 1rem;
 	}
+
+	h3 {
+		text-decoration: underline;
+		text-decoration-color: #ff4081;
+	}
 }

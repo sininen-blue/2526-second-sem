@@ -10,15 +10,14 @@ lineNumbers: true
 
 ## Input and Output (in MIMD systems)
 
-Input and output on MIMD systems can be fairly complicated
+Input and output on MIMD systems can be fairly *complicated*
 
-As of now, most of our input and output systems are designed around using the standard `C` library
+As of now, 
+- most of our input and output systems are designed around using the standard `C` library
 
 `printf`, `scanf`, etc
 
 > If you had multiple cores, and each core executed a `printf`, where do you want the output to go?
-
----
 
 ---
 
@@ -44,7 +43,7 @@ layout: two-cols-header
 
 ## Non-determinism
 
-Any input and output from multiple threads can be interleaved in unpredictable ways
+Any input and output from multiple threads can be **interleaved** in unpredictable ways
 
 For example, if two threads execute
 
@@ -79,13 +78,17 @@ Hello
 layout: center
 ---
 
-## Conventions for Input and Output
+# Conventions for Input and Output
 
-To address some of these input and output issues we simply make some assumption and follow certain conventions
+To address some of these input and output issues 
+
+We simply make some assumption and follow certain **conventions**
 
 ---
 
 ## The "Manager" Pattern
+
+<img class="mx-auto rounded w-2/4 mt-4" src="./images/06/manager.png">
 
 Simply have only `rank 0` talk to the user and read from the keyboard
 
@@ -99,7 +102,13 @@ Simply have only `rank 0` talk to the user and read from the keyboard
 
 ## on File access
 
-If 1,000 different processes try to write to the `results.txt` file, the system might lock up, corrupt the file, crash the program, or simply not write the expected output
+If 1,000 different processes try to write to the `results.txt` file, 
+
+The system might 
+- lock up, 
+- corrupt the file, 
+- crash the program, 
+- or simply not write the expected output
 
 The solutions to this are either
 
@@ -112,17 +121,20 @@ The solutions to this are either
 
 When debugging regular programs, we often use `printf` statements to print out variable values
 
-In parallel program, this method also works, but requires one important consideration
+In parallel programs, this method also *works*, but requires **one** important consideration
 
 > Always print the rank of the process or thread that is printing the output
 
-And also make sure each core can write to `stdout` or `stderr`
+<small>And also make sure each core can write to `stdout` or `stderr`</small>
 
+---
+layout: two-cols-header
 ---
 
 ## GPU considerations
 
-GPU architecture is fundamentally different from CPU architecture
+::left::
+GPU architecture is *fundamentally different* from CPU architecture
 
 The **host** cpu, the one setting up the GPU code, is separate from the GPU itself
 
@@ -134,6 +146,12 @@ With one exception:
 
 In this scenario, we'll direct the output of each core to `stdout` or `stderr`, which will be flushed to the CPU at some point
 
-The order of the `output` is random
+<small>The order of the `output` is random</small>
 
+::right::
 
+<img class="mx-auto rounded w-3/4 mt-4" src="./images/06/shader_print.png">
+
+Though usually, debugging GPU code involves creating custom solutions
+
+Such as making interactive visualizations, writing data to files, or using specialized debugging tools
