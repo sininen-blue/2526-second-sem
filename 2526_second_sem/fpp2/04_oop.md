@@ -194,6 +194,17 @@ layout: center
 
 # Encapsulation
 
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 ## Encapsulation
