@@ -626,4 +626,87 @@ Like a `CookingVisitor`, `EatingVisitor,` etc, and then pass that to the pastry'
 
 ## Visitor Pattern for Expressions
 
+We'll be defining the visitors inside the generate ast class so we don't have to write them by hand
+
+```
+tool/GenerateAst.java
+in defineAst()
+```
+```java
+    // writer.println("absract class " + baseName + " {");
+    defineVisitor(writer, baseName, types);
+```
+
 ---
+
+## Visitor Pattern for Expressions
+
+```
+tool/GenerateAst.java
+add after defineAst()
+```
+```java
+private static void defineVisitor(
+    PrintWriter writer, String baseName, List<String> types) {
+
+    writer.println("    interface Visitor<R> {");
+
+    for (String type : types) {
+        String typeName = type.split(":")[0].trim();
+        writer.println("        R visit" + typeName + baseName + "(" +
+            typeName + " " + baseName.toLowerCase() + ");");
+    }
+
+    writer.println("    }");
+}
+```
+
+---
+
+## Visitor Pattern for Expressions
+
+```
+tool/GenerateAst.java
+in defineAst()
+```
+```java
+    // defineType(writer, baseName, className, fields);
+    // }
+
+    writer.println();
+    writer.println("    abstract <R> R accept(Visitor<R> visitor);");
+
+    // writer.println("}");
+```
+
+---
+
+## Visitor Pattern for Expressions
+
+Finally, each subclass should implement the accept function
+
+```
+tool/GenerateAst.java
+in defineType()
+```
+```java
+    // writer.println("    }");
+
+    // visitor pattern
+    writer.println();
+    writer.println("        @Override");
+    writer.println("        <R> R accept(Visitor<R> visitor) {");
+    writer.println("            return visitor.visit" + className + baseName + "(this);");
+    writer.println("        }");
+    writer.println("    }");
+
+    // fields
+```
+
+---
+
+# A printer
+
+---
+
+
