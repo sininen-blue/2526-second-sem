@@ -11,6 +11,10 @@
 	strong {
 		color: #ff4081;
 	}
+	
+	em {
+		color: #2196f3;
+	}
 
 	.col-left {
 		padding-right: 1rem;
