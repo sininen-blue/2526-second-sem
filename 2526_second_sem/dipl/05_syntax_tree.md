@@ -702,11 +702,3 @@ in defineType()
 
     // fields
 ```
-
----
-
-# A printer
-
----
-
-
