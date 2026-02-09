@@ -14,7 +14,7 @@ lineNumbers: true
 
 1. What is an object
 2. what does it mean to be oriented around objects
-3. what does that have to do with programming
+3. what does that have to do with fundamentals of programming
 
 ---
 
@@ -53,7 +53,7 @@ which divides `a` by `b` then multiplies the result by `b`
 layout: center
 ---
 
-## Exercise 2
+## Exercise 3
 
 Make only the addition operation support 3 inputs
 
@@ -61,9 +61,9 @@ Make only the addition operation support 3 inputs
 layout: center
 ---
 
-## Exercise 3
+## Hypothetical Exercise 4
 
-support the operation
+Support the operation
 
 ```
 ---
@@ -111,11 +111,11 @@ Objects have two main **advantages**
 
 1. They allow us to **model** the real world
 
-This means that it's slightly easier to understand complex systems by **breaking them down** into smaller, more manageable pieces
+This means that it's slightly easier to understand complex systems by aligning them to real world entities
 
 2. They make it easier to **reason** about our code
 
-Each object is **ideally** a self-contained unit that has its own state and behavior. Meaning we can simply focus on one object at a time without worrying about the entire system
+Each object is **ideally** a self-contained unit that has its own *state* and *behavior*. Meaning we can simply focus on one object at a time without worrying about the entire system
 
 ---
 
@@ -123,14 +123,12 @@ Each object is **ideally** a self-contained unit that has its own state and beha
 
 Represents the **state** of the object
 
-For an imaginary employee object, the data could be
+For an imaginary `employee object`, the data could be
 - name
 - employee ID
 - phone number
 - address
 - etc
-
-Note that these are attributes of the **specific** employee object
 
 ---
 
@@ -145,7 +143,7 @@ For the employee object, the behavior could be:
 - attend meeting
 - etc
 
-In OOP, these behaviors are represented as **methods** of the object and invoked by sending **messages** to the object
+In OOP, these behaviors are represented as **methods** of the object
 
 ---
 
@@ -153,7 +151,7 @@ In OOP, these behaviors are represented as **methods** of the object and invoked
 
 Objects can interact with each other by sending **messages**
 
-Messages being **method calls** that one object sends to another object
+Messages being `method calls` that one object sends to another object
 
 Imagine a `Payroll` object that needs to calculate the salary of an `Employee` object
 
@@ -163,34 +161,6 @@ In order to get that, it needs to send messages to the `Employee` like
 3. `get_hourly_rate()`
 
 Then the `Employee` object will respond with the requested data
-
----
-
-## Sidenote, UML diagrams
-
-**U**nified **M**odeling **L**anguage (UML) is a standardized way to visualize the design of a system
-
-```mermaid
-classDiagram
-    class Employee {
-        - name: str
-        - employee_id: int
-        - phone_number: str
-        - address: str
-        + get_employee_id(): int
-        + get_hours_worked(): float
-        + get_hourly_rate(): float
-        + clock_in(): void
-        + work_on_task(task: str): void
-    }
-
-    class Payroll {
-        - currentEmployee: Employee
-        + calculate_salary(employee: Employee): float
-    }
-```
-
-Minus (-) means **private** attribute/method, Plus (+) means **public** attribute/method
 
 ---
 layout: two-cols
@@ -233,7 +203,7 @@ With methods `bark()` and `run()`, and attributes `name` and `energy`
 
 ## Objects
 
-<img class="mx-auto" src="./images/04/classes.png" width="600">
+<img class="mx-auto w-100 mt-4" src="./images/04/classes.png">
 
 ---
 
@@ -243,7 +213,7 @@ In the context of python
 
 ```python
 class DogHandler:
-    pass
+    #
 
 guy = DogHandler()
 dog = Dog("Powder")
@@ -268,6 +238,17 @@ The act of bundling data and methods into a single unit
 
 ## Encapsulation
 
+Encapsulation is the **core** concept of OOP
+
+It states that a singular `object` should contain both the `data` and `methods` that operate on that data
+
+This means that, if you make a fully object oriented program, you should be able to look at each object in isolation
+
+
+---
+
+## Side note on Data Hiding
+
 One **primary** advantage of OOP is you don't need to expose all of an object's data and methods to the outside world
 
 This is primarily useful for **teams** because
@@ -279,6 +260,35 @@ For example, a `SquareCalculator` needs to provide a way for another object to g
 But it doesn't need to expose *how* it calculates the square
 
 This is called **data hiding** and is considered good practice in OOP
+
+---
+
+## Side note, UML diagrams
+
+**U**nified **M**odeling **L**anguage (UML) is a standardized way to visualize the design of a system
+
+```mermaid
+classDiagram
+    class Employee {
+        - name: str
+        - employee_id: int
+        - phone_number: str
+        - address: str
+        - work_on_task(task: str): void
+        + get_employee_id(): int
+        + get_hours_worked(): float
+        + get_hourly_rate(): float
+        + clock_in(): void
+    }
+
+    class Payroll {
+        - currentEmployee: Employee
+        - calculate_salary(employee: Employee): float
+        + get_employee_pay(employee: Employee): float
+    }
+```
+
+Minus (-) means **private** attribute/method, Plus (+) means **public** attribute/method
 
 ---
 
@@ -499,4 +509,77 @@ In OOP this is done by
 - stating only the **relationships** between objects
 
 `Car` has an `Engine`, `Dog` is a `Mammal` 
+
+---
+
+## Object-Oriented in the context of Beginner Programmers
+
+Object oriented programming can be fairly difficult to understand for beginner programmers, and that's because it requires a certain level of **abstraction** and **design thinking** that is not necessarily intuitive
+
+> it requires experience 
+
+The problem is that most popular APIs, engines, systems, etc. are usually built using OOP and expect you to use OOP
+
+Most game engines, and Godot in particular, are *built using* OOP and *expect you to use* OOP
+
+A lot of web development frameworks are *built using* OOP and *expect you to use* OOP
+
+---
+
+## Project
+
+Create a simple text-based game using OOP principles
+
+Primarily:
+1. it should have at least 3 different objects (player, enemy, scene, decision, etc)
+2. those objects should have their own data and behavior
+3. those objects should interact with each other through messages (method calls)
+
+```python
+player = Player("Mark", 120)
+enemy = Enemy("Goblin", 80)
+player.set_target(enemy.get_weakpoint())
+player.attack(enemy)
+```
+
+---
+
+## Notes
+
+1. It can be an RPG, a puzzle game, a dating sim, etc. as long as it meets the above criteria
+
+2. It **must** be a single python file that is runnable in the terminal
+
+3. It **must** be named `lastname_firstname_oop.py` and submitted in NEO
+
+4. The deadline is **February 19th, 11:59pm Friday**
+
+5. I will spend the first ~20 minutes of the next class going over some of the projects
+
+6. **late** submissions will be accepted with a 10% penalty per day late
+
+7. AI use is **discouraged**, but if you do use AI, be prepared to explain what it added
+
+8. Students with the exact or close to exact same code will not be checked
+
+---
+
+## Rubrics
+
+1. Program requirements (10 pts)
+- runs with no crashes (5 pts)
+- playable from start to finish (4 pts)
+- named correctly (1 pts)
+
+2. OOP principles (10 pts)
+- at least 3 different objects (6 pts)
+- objects have their own data (2 pts)
+- objects have their own behavior (2 pts)
+
+3. Interaction (10 pts)
+- objects interact with each other (5 pts)
+- interactions are clear and make sense (5 pts)
+
+4. Creativity (10 pts)
+
 
