@@ -34,13 +34,13 @@ layout: center
 
 ## Types of threats in the digital world
 
-The two most common threats:
-- malware
-- phishing
+There is *technically* only one type of threat purely in the digital world, and that is **malware**
+
+However, there are many other types of threats that are **aided** by the digital world
 
 These threats are all methods of **compromising** a person's device, data, or identity
 
-And if successful, can lead to **cybercrimes** such as:
+And regardless of if they are successful, are considered **cybercrimes** such as:
 - data breaches
 - financial fraud
 - identity theft
@@ -49,7 +49,7 @@ And if successful, can lead to **cybercrimes** such as:
 
 ## Malware
 
-**Malware** or **malicious software** is any software that is designed to cause harm to a computer, server, client, or computer network
+**Malware** or **mal**icious soft**ware** is any software that is designed to cause cause your computer, server, client, or network to behave in an *unwanted* manner
 
 This means
 1. slowing your computer down
@@ -57,9 +57,9 @@ This means
 3. causing system crashes
 4. stealing your data
 
-In the modern day, malware is mostly used for financial gain, 
-- Either by **stealing data** that can be sold, 
-- Holding your data **hostage** until you pay a ransom, 
+In the modern day, malware is mostly used for *financial* gain,
+- Either by **stealing data** that can be sold,
+- Holding your data **hostage** until you pay a ransom,,
 - Or by using your computer to **mine cryptocurrency** for the attacker
 
 ---
@@ -72,16 +72,42 @@ layout: center
 
 ## Types of Malware
 
-1. adware
-2. spyware
-3. trojan
-4. ransomware
-5. rootkit
-6. keylogger
+There are 2 aspects to malware, the **method of infection** and the **payload**, how you get it and what it does
+
+There are 2 main methods of **infection**:
+1. A *lie*
+
+This can come in the form of an email, a message, a pop-up, an ad, a download link, etc. You are *tricked* into clicking something where you expect something else to happen
+
+2. A *vulnerability*
+
+This is when the malware exploits a **vulnerability** in your software, such as an unpatched security flaw, to infect your device without you having to click on anything.
+
+This is usually done through *worms* and *viruses* that can spread themselves across networks and devices.
+
+---
+
+## Types of Malware
+
+In terms of **payload**, there are many types of malware, however all have the same goal of **compromising** your device, data, or identity
+
+> Usually for the purpose of financial gain, but sometimes just for fun or to cause harm
+
+Starting from the least common (at least for the average user) to the *most common*, we have:
+
+1. *Ransomware*: encrypts your files and demands a ransom to unlock them
+2. *Spyware*: secretly monitors your activities and steals your data
+3. *Adware*: shows you unwanted ads and generates revenue for the attacker
+4. *Botnet malware*: allows your computer to be controlled to perform malicious activities,
+    - such as sending spam emails, 
+    - launching DDoS attacks, 
+    - or mining cryptocurrency
 
 ---
 
 ## Threats aided by the digital world
+
+Many cybercrime threats are not **exclusive** to the digital world, but are **aided** by it, such as:
 
 - Social engineering
 - Identity theft
@@ -151,7 +177,7 @@ The most common way people get hacked, scammed, or otherwise compromised is by *
 
 Whenever someone sends you a link, a file, especially if it's from *someone you don't know*, or if it's unexpected, take an extra moment to **think** before you click
 
-Cybercrimes **filter** out the most vulnerable targets
+Cybercrimes, especially scams, **filter** out the most vulnerable targets
 
 > You might not get caught by obvious scams, but that leaves you confident
 
