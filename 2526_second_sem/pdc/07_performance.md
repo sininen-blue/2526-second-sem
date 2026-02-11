@@ -186,6 +186,8 @@ Suppose we increase the number of processes
 If we can find a corresponding rate of increase in the problem size so that the program has the same efficiency $E$, then we can say that the program is *scalable*
 
 ---
+layout: two-cols
+---
 
 ## Example
 
@@ -199,15 +201,62 @@ Then
 
 $$
 \begin{aligned}
-E &= \frac{n}{p(\frac{n}{p+1})} \\
-&= \frac{n}{n + p}
+E &= \frac{T_{serial}}{p \cdot T_{parallel}} \\
+&= \frac{n}{p(\frac{n}{p}+1)} \\
+E &= \frac{n}{n + p}
 \end{aligned}
 $$
 
+::right::
+
 To see if the program is scalable, we *increase the number of processes* by a factor $k$
 
-And we want to find factor $x$ that we need to increase the problem size by so that $E$ remains the same
+And we want to find factor $x$ that we need to increase the problem size by so that $E$ **remains the same**
 
 ---
 
 ## Example
+
+if the *number of processes* will be $kp$ (where $k$ is the factor by which we increase the number of processes)
+
+and the *problem size* will be $xn$ (where $x$ is the factor by which we increase the problem size)
+
+We want to find $x$  where it still equals $E$
+
+$$
+\begin{aligned}
+E &= \frac{n}{n + p} = \frac{xn}{xn + kp}
+\end{aligned}
+$$
+
+---
+
+## Example
+
+$$
+\begin{aligned}
+E = \frac{n}{n + p} &= \frac{xn}{xn + kp} \\
+\frac{1}{n+p} &= \frac{x}{xn + kp} \\
+xn + xp &= xn + kp \\
+xp &= kp \\
+x &= k
+\end{aligned}
+$$
+
+In other words, the factor that we need to increase $x$ (*the problem size*) and $k$ (*the number of processes*) by *to maintain the same efficiency*, is the **same** factor
+
+To make sure that our program scales and maintains it's current efficiency, anytime we want to increase the number of processors, we also need to increase the problem size by the same factor
+
+---
+
+## Terminology
+
+There are names for two specific outcomes of this process
+
+If we *increase* the processors, and *maintain* the problem size, we call this **strongly scalable**
+
+If we *increase* the processors, and *increase* the problem size by the same factor, we call this **weakly scalable**
+
+So if we set $x=1$ and increase $k$, and it maintains efficiency, our program would be **strongly scalable**
+
+
