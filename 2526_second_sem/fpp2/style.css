@@ -1,11 +1,15 @@
 :root {
-	--slidev-code-font-size: 16px !important;
+	--slidev-code-font-size: 14px !important;
 	--slidev-code-line-height: 21px !important;
 }
 
 .slidev-layout {
 	p {
 		font-size: 1.2rem;
+	}
+
+	em {
+		color: #2196f3;
 	}
 
 	strong {

@@ -531,15 +531,139 @@ A lot of web development frameworks are *built using* OOP and *expect you to use
 Create a simple text-based game using OOP principles
 
 Primarily:
-1. it should have at least 3 different objects (player, enemy, scene, decision, etc)
-2. those objects should have their own data and behavior
-3. those objects should interact with each other through messages (method calls)
+1. it should have *at least 3 different objects* (player, enemy, scene, decision, etc)
+2. those objects should have *their own data and behavior*
+3. those objects *should interact* with each other through messages (method calls)
+4. implement either **inheritance** or **composition** in your design
+
+---
+
+## Sample of inheritance
 
 ```python
-player = Player("Mark", 120)
-enemy = Enemy("Goblin", 80)
-player.set_target(enemy.get_weakpoint())
-player.attack(enemy)
+class Enemy:
+    def __init__(self, name, health, attack):
+        self.name = name
+        self.health = health
+        self.attack = 10
+
+    def attack(self, target):
+        target.health -= self.attack
+        print(f"{self.name} attacks {player.name} for {self.attack} damage!")
+
+class Goblin(Enemy):
+    def __init__(self, agility):
+        super().__init__("Mark", 30, 5)
+        self.agility = agility
+
+    def swift_strike(self, target):
+        if agility > target.get_agility():
+            damage = self.attack * 2
+            target.health -= damage
+            print(f"{self.name} performs a swift strike on {target.name} for {damage} damage!")
+        else:
+            print(f"{self.name}'s swift strike missed!")
+```
+---
+
+## Sample of composition
+
+```python
+class MeleeWeapon():
+    def __init__(self, name, damage):
+        self.name = name
+        self.damage = damage
+
+    def use(self, target):
+        target.health -= self.damage
+        print(f"{self.name} hits {target.name} for {self.damage} damage!")
+
+def Enemy():
+    def __init__(self, name, health, weapon):
+        self.name = name
+        self.health = health
+    #    self.weapon = weapon
+
+    def attack(self, target):
+        self.weapon.use(target)
+
+sword = MeleeWeapon("Sword", 10)
+goblin = Enemy("Goblin", 30, sword)
+```
+
+---
+
+## Notes
+
+While combat is a *common theme* for text-based games, feel free to explore other genres as long as you meet the project requirements
+
+For example
+1. An exploration game with objects like `Map`, `Mountain`, `Key`, `Door`
+
+```python
+dungeon_key = Key("dk", "A rusty old key that opens the dungeon door.") 
+
+dungeon_door = Door("Dungeon Door", is_locked=True, required_key=dk)
+dungeon_door.unlock(dungeon_key)
+```
+
+2. A dating sim with objects like `Player`, `Romancable`, `Location`, `gifts`
+
+```python
+emily = Romancable("Emily", "gems")
+
+mark = Player("Mark")
+mark.give_gift(emily, "gems", 5)
+```
+
+---
+
+## Recipes
+
+Remember to include a *main loop* to allow the player to make choices and interact with the game world
+
+```python
+while True:
+    # Initialize game state, enemies, levels, romancable
+    # present choices to the player
+
+    choice = input("Enter your choice: ")
+
+    # if statements to handle player choices and update game state
+    if choice == "1":
+        # do something
+        if choice == "1":
+    elif choice == "2":
+        # do something else
+    # etc
+```
+
+---
+
+## Recipes
+
+*state management* is an important part of any game, it's easier to put it in an object
+
+```python
+class GameState:
+    def __init__(self, player, current_location):
+        self.player = player
+        self.current_location = "village"
+
+    def update_location(self, new_location):
+        self.current_location = new_location
+
+while True:
+    game_state = GameState(player, "village")
+    choice = input("Enter your choice: ")
+    if game_state.current_location == "village":
+        if choice == "1":
+            game_state.update_location("forest")
+        elif choice == "2":
+            game_state.update_location("dungeon")
+
+    if game_state.current_location == "forest":
+        if choice == "1":
 ```
 
 ---
@@ -571,15 +695,30 @@ player.attack(enemy)
 - playable from start to finish (4 pts)
 - named correctly (1 pts)
 
-2. OOP principles (10 pts)
+2. OOP principles (20 pts)
 - at least 3 different objects (6 pts)
 - objects have their own data (2 pts)
 - objects have their own behavior (2 pts)
+- use of inheritance or composition (10 pts)
 
 3. Interaction (10 pts)
 - objects interact with each other (5 pts)
 - interactions are clear and make sense (5 pts)
 
-4. Creativity (10 pts)
+4. Completeness (10 pts)
+- game is complete and has a clear goal or loop (10 pts)
 
+---
 
+## Brainstorming time
+
+On any piece of paper, brainstorm some ideas for your text-based game
+
+Specifically,
+
+- genre
+- how you want it to play
+- probable objects
+- interactions between those objects
+
+Submit it to me and I'll go over it with you and give you feedback on how to implement it
