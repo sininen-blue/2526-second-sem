@@ -259,4 +259,18 @@ If we *increase* the processors, and *increase* the problem size by the same fac
 
 So if we set $x=1$ and increase $k$, and it maintains efficiency, our program would be **strongly scalable**
 
+---
 
+## Assignment
+
+Supposed that
+- $n$ is the problem size
+- $p$ is the number of processes
+- $T_{serial} = n^2$
+- $T_{parallel} = n^2/p+log_2(p)$
+
+Write a program in any language that let's input values for $n$ and $p$, and then calculates the efficiency $E$ and $S$
+
+Then, on a text file, answer the following questions
+1. what happens to the speedups and efficiencies as $p$ is increased, and $n$ is fixed
+2. what happens when $p$ is fixed and $n$ is increased
