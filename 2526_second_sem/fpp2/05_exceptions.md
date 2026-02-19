@@ -1,5 +1,5 @@
 ---
-title: 05 OOP
+title: 05 Exceptions
 exportFilename: exports/fpp2/05_exceptions
 lineNumbers: true
 ---
