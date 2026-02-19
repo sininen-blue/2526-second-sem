@@ -86,9 +86,11 @@ In the formula
 
 `A1:D1` is a reference to the range of cells from `A1` to `D1`, which includes `A1`, `B1`, `C1`, and `D1`
 
-And `A2` is a reference to the cell `A2`, which contains `>=20`
+And `A2` is a reference to the cell `A2`, which contains `>=3`
 
 If the range `A1:D1` contains `[1, 2, 3, 4]`
+
+What is the *output*
 
 ---
 
@@ -145,5 +147,3 @@ This requires 3 values:
 
 2. the *count* of all the people who earn more than \$50K per year
 3. the *average* age, which is calculated by dividing the sum of ages by the count of people
-
----
