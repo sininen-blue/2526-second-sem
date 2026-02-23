@@ -14,8 +14,6 @@ We now have a scanner and the bones of a parser that makes a syntax tree
 
 To make it easier to debug, let's convert that syntax tree into lines that you can print
 
-<img/>  
-
 ```
 (* (- 123) (group 45.67))
 ```
