@@ -1,6 +1,6 @@
 ---
-title: 06 OOP
-exportFilename: exports/fpp2/06_oop
+title: 04 OOP
+exportFilename: exports/fpp2/04_oop
 lineNumbers: true
 ---
 
