@@ -1,5 +1,5 @@
 :root {
-	--slidev-code-font-size: 16px !important;
+	--slidev-code-font-size: 14px !important;
 	--slidev-code-line-height: 21px !important;
 }
 
@@ -26,6 +26,6 @@
 
 	h3 {
 		text-decoration: underline;
-		text-decoration-color: #ff4081;
+		text-decoration-color: #2196f3;
 	}
 }

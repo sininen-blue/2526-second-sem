@@ -35,6 +35,7 @@ For windows, it leads you to `MS-MPI` which is a Microsoft implementation of MPI
 For apple, you can install `mpich` using `brew install mpich`. or `sudo port install mpich`
 
 This should mean you have
+
 ```
 mpicc
 mpirun
@@ -63,7 +64,16 @@ int main(void) {
     MPI_Init(NULL, NULL);
     MPI_Comm_size(MPI_COMM_WORLD, &comm_sz);
     MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+    // ...
+```
 
+---
+
+## Hello world
+
+
+```c
+    // ...
     if (my_rank != 0) {
         sprintf(greeting, "from process %d of %d", my_rank, comm_size);
         MPI_Send(greeting, strlen(greeting) + 1, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
@@ -85,9 +95,9 @@ int main(void) {
 mpicc -Wall -o mpi_hello mpi_hello.c
 ```
 
-`mpicc` is a *wrapper* for the `gcc` compiler that links the MPI library.
+`mpicc` is a *wrapper* for the `gcc` compiler that *links* the MPI library.
 
-and you can also use `mpirun` or `mpiexec` to run the program with a specified number of processes:
+And you can also use `mpirun` or `mpiexec` to run the program with a specified number of processes:
 
 ```
 mpirun -n 4 ./mpi_hello
@@ -110,15 +120,10 @@ Imports the MPI library and allows you to use MPI functions
 ```c
 MPI_Init(NULL, NULL);
 ```
-and 
 
-```c
-MPI_Finalize();
-```
+Determine which processes are *participating* in the MPI program.
 
-Determine which processes are participating in the MPI program and clean up resources when done.
-
-No MPI functions should be called before the `MPI_Init` or after `MPI_Finalize`.
+**No** MPI functions should be called *before* the `MPI_Init`.
 
 The specific syntax for `MPI_Init` can vary, but the most common form is
 
@@ -140,6 +145,8 @@ MPI_Finalize();
 
 This states that we're done using MPI, and that *any resources allocated by MPI can be freed*.
 
+The syntax is similar, but it takes no arguments and returns an error code:
+
 ```c
 int MPI_Finalize(void);
 ```
@@ -150,7 +157,7 @@ int MPI_Finalize(void);
 
 In MPI, a *communicator* is a **collection of processes** that can send messages to each other
 
-`MPI_Init` defines a communicator that consists of all the processes started by the user when they started the program
+`MPI_Init` defines a communicator that consists of *all the processes started by the user* when they started the program
 
 This is usually called `MPI_COMM_WORLD`, and we can get information out of this communicator using the following functions:
 
@@ -161,19 +168,25 @@ MPI_Comm_rank(MPI_Comm comm, int* my_rank_p);
 
 The first argument is the *communicator*, with a type defined by `MPI`, 
 
-And these functions return to a location, usually to an address defined in the *second argument*
+And these functions *return to a location*, usually to an *address* defined in the *second argument*
 
 
 ---
 
 ## SPMD
 
-Notice that this is *one* program that is run by *multiple* processes.
+Notice that this is **one** program that is run by *multiple* processes.
 
-*Most* MPI programs are written this way, and this is called **SPMD** (*Single Program, Multiple Data*). 
+*Most* MPI programs are written this way, and this is called **SPMD** (Single Program, Multiple Data). 
+
+> We defined our spmd primarily using *if else* statements, but we could also use *switch* statements or even *function pointers* to define the behavior of each process.
 
 Notice that our program can, in principle, run with any number of processes which is good practice 
 
+And while that property isn't required, it is generally a good idea as it allows for better scalability
+
+---
+layout: center
 ---
 
 # Communication
@@ -182,11 +195,27 @@ Notice that our program can, in principle, run with any number of processes whic
 
 ## Communication
 
-In our program, other than process 0, each process creates a message which will *send* to 0
+In our program, other than process 0, each process *creates a message* which will *send* to `0`
 
-And process 0 *receives* messages from all other processes.
+```c{2-3}
+    if (my_rank != 0) {
+        sprintf(greeting, "from process %d of %d", my_rank, comm_size);
+        MPI_Send(greeting, strlen(greeting) + 1, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    } else { 
+        // ...
+```
 
-It does this by *looping* over the number of processes, and calling `MPI_Recv` for each process.
+> Note that we're using `sprintf` which is a *string* version of `printf`
+
+And process `0` simply prints its own message, then *receives* messages from all other processes.
+
+```c{2-3}
+    printf("from processes %d of %d %s\n", my_rank, comm_size);
+    for (int q = 1; q < comm_size; q++) {
+        MPI_Recv(greeting, MAX_STRING, MPI_CHAR, q, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        printf("%s\n", greeting);
+```
+
 
 ---
 
@@ -205,26 +234,50 @@ int MPI_Send(
 
 The first three arguments, `msg_buf_p`, `msg_size`, and `msg_type` specify the message to be sent.
 
-Specifically, 
-1. `msg_buf_p` is a pointer to the data to be sent, 
-2. `msg_size` is the number of elements in the message, for strings, that's for each character plus the null terminator, and
-3. `msg_type` specifies the type of data that is defined by `MPI`.
+1. `msg_buf_p` is a pointer to the *data to be sent*, 
+2. `msg_size` and `msg_type` go hand-in-hand to specify the *type of the data* and *how much of that type* to be sent.
 
 ---
 
 ## MPI_Send
 
-The next three arguments, `dest`, `tag`, and `communicator` specify where the message should be sent.
+The next three arguments, `dest`, `tag`, and `communicator` specify *where the message should be sent*.
 
-1. `dest` is the *rank* of the process that should receive the message,
-2. `tag` is an integer that can be used to *label* the message, and
-3. `communicator` specifies the communicator that the sender and receiver belong to.
+1. `dest` is the *rank* of the process that should **receive** the message,
+2. `tag` is an integer that can be used to **label** the message, and
+3. `communicator` specifies the **communicator** that the sender and receiver belong to.
 
 You can think of `tag` as a way to *filter* messages. 
 
-For example, if process 0 is receiving messages from multiple processes, it can use the `tag` to determine which message to average and which message to print.
-
 An `communicator` as a *world*, and you can have multiple communicators that represent different groups of processes. And they would have *no way* of communicating with each other.
+
+---
+
+## Tags
+
+Suppose that `process 0` receives strings, and depending on some computation, it will either *print* or *store* the string. 
+
+The first four arguments of `MPI_Send` provide no information on what `process 0` should do
+
+But we can use a `tag`, for example, `process 1` can use tags `0` `1` `2` etc. to define behavior 
+
+- `process 2` uses tag `1` because it wants to print
+- `process 3` uses tag `2` because it wants to store
+- `process 1` uses tag `0` because it wants to do something else
+
+---
+
+## Communicator 
+
+However, say that we're studying global climate change, and we have *two modules*, one for `atmoshpere modeling` and one for `ocean modeling`. And both of these modules use *MPI*
+
+Since they were written independently, they **can't** communicate with *each other*, but the can communicate *internally*
+
+Our job would be to write *interface* code for the two processes. 
+
+And while we could come up with a scheme for tags, like `ocean modeling` uses tags `0-99` and `atmosphere modeling` uses tags `100-199`, this is *error prone* and *not scalable*.
+
+Remember that a *communicator* is essentially a **separate** universe, and processes in one communicator **cannot** communicate with processes in another communicator.
 
 ---
 
@@ -242,70 +295,194 @@ int MPI_Recv(
 )
 ```
 
-The first three, `msg_buf_p`, `msg_size`, and `msg_type` specify where the received message should be stored.
-- the `source` argument specifies the rank of the process that sent the message
+The first three, similarly to `Send`, 
+
+- `msg_buf_p`,
+- `msg_size`, and 
+- `msg_type` specify where the received message should be stored.
+
+`msg_buf_p` *points* to the location to save it, and `msg_size` and `msg_type` specify the *type* and *amount* of data to be received.
+
+---
+
+## MPI_Recv
+
+- the `source` argument specifies the *rank of the process that sent the message*
+
+In *MPI* the receiver usually has to know *who* sent a message, with exception
+
 - the `tag` argument specifies the tag of the message to be received
 - the `communicator` argument specifies the communicator that the sender and receiver belong to
-- the `status` argument is a pointer to an `MPI_Status` structure that can be used to get information about the received message, such as its size and source.
 
-Most of the time, we can ignore the `status` argument by passing `MPI_STATUS_IGNORE`.
+Which should **equal** to the `communicator` and `tag` used in `MPI_Send` for the message to be received
+
+- the `status` argument is a pointer to an `MPI_Status` *structure* that can be used to get information about the received message, such as its size and source.
+
+Most of the time, we can *ignore* the `status` argument by passing `MPI_STATUS_IGNORE`.
 
 ---
 
 ## Message matching
 
-Suppose process 1 uses `MPI_Send` with
+Suppose `process 1` uses `MPI_Send` with
 
 ```c
 MPI_Send(send_buf_p, msg_size, msg_type, dest, send_tag, communicator);
 ```
 
-Then process 0 can receive this message using `MPI_Recv` with
+Then `process 0` can receive this message using `MPI_Recv` with
 ```c
 MPI_Recv(recv_buf_p, msg_size, msg_type, source, recv_tag, communicator, &status);
 ```
 
-The message sent by `1` will only be received by `0` if the following conditions are met:
-1. recv_communicator == send_communicator
-2. recv_tag == send_tag
-3. source == 1
-4. dest == 0
+The message sent by `1` will **only be received** by `0` if the following conditions are met:
+1. `recv_communicator == send_communicator`
+2. `recv_tag == send_tag`
+3. `source == 1`
+4. `dest == 0`
 
 ---
 
 ## MPI_ANY_SOURCE
 
-In `MPI_Recv`, we can use `MPI_ANY_SOURCE` as the `source` argument to receive a message from *any* source.
+It's likely that a process is receiving messages from *multiple* sources, and it may not know *which* source will send a message first.
 
-For example,
+If processes `1,2,...` send their results back to `process 0` when they finish
 
-If `process 0` is sending work to processes `1,2,...,comm_sz-1`, and `process 1,2,...,comm_sz-1` send their results back to `process 0` when they finish
+Because the time it takes to finish the work is *unpredictable*, `process 0` has no way of knowing the order in which the results will be sent back.
 
-And if the time it takes to finish the work is *unpredictable*, then `process 0` has no way of knowing the order in which the results will be sent back.
+What we *could* do, and what we did do for the example, is to *place* the sent messages into a buffer and wait for a loop to receive them. 
 
-In this case, `process 0` can use `MPI_ANY_SOURCE` to receive messages from any source, and it will receive the first message that is sent back.
+---
 
-It can also use `MPI_ANY_TAG` to receive messages with any tag, and it will receive the first message that is sent back regardless of its tag.
+## MPI_ANY_SOURCE
 
-So instead of placing the sent messages into a buffer and waiting for a loop to receive them, we can use `MPI_ANY_SOURCE` and `MPI_ANY_TAG` to receive messages as they come in.
+But this means that, 
+
+for example, if `process 2` *finishes first*, `process 0` will still *wait* for `process 1` to finish before it can receive the message from `process 2`.
+
+Standard practice is to use `MPI_ANY_SOURCE` and `MPI_ANY_TAG` to receive messages as they come in, *without waiting for a specific source or tag.*
+
+And handle the order of messages after
 
 ---
 
 ## MPI `status_p` argument
 
-A receiver can receive a message without knowing the amount of data in the message, the sender of the message, or the tag of the message
+The receiver, especially when using `MPI_ANY_SOURCE` and `MPI_ANY_TAG`, could receive a message without knowing
 
-`MPI_Status` is a struct with at least 3 members
+1. the *sender of the message*, or
+2. the *tag of the message*
+
+This information can be obtained from the `status_p` argument of `MPI_Recv`, which is a pointer to an `MPI_Status` struct. Which is the last argument of `MPI_Recv` and is used to get information about the received message.
+
+`MPI_Status` is a struct with *at least* 3 members
 - `MPI_SOURCE` which gives the rank of the sender of the message
 - `MPI_TAG` which gives the tag of the message
 - `MPI_ERROR` which gives the error code of the message
 
-TODO
+---
+
+## MPI status
+
+Suppose that our program defines a variable
+
+```c
+MPI_Status status;
+```
+
+and after a call to `MPI_Recv` where `&status` is passed as the last argument, we can use
+
+```c
+status.MPI_SOURCE
+status.MPI_TAG
+```
+
+To get the source and tag of the received message.
+
+And even
+
+```c
+MPI_Get_count(&status, msg_type, &count);
+```
+
+Which will return the number of elements received
+
+---
+layout: two-cols-header
+---
+
+## Send and Recv Summary
+
+::left::
+```c
+int MPI_Send(
+    void* msg_buf_p,        // input
+    int msg_size,           // input
+    MPI_Datatype msg_type,  // input
+    int dest,               // input
+    int tag,                // input
+    MPI_Comm communicator   // input
+)
+```
+i.e.
+```c
+MPI_Send(
+    greeting, 
+    strlen(greeting) + 1, 
+    MPI_CHAR, 
+    0, 
+    0, 
+    MPI_COMM_WORLD
+);
+```
+
+::right::
+```c
+int MPI_Recv(
+    void* msg_buf_p,        // output
+    int msg_size,           // input
+    MPI_Datatype msg_type,  // input
+    int source,             // input
+    int tag,                // input
+    MPI_Comm communicator,  // input
+    MPI_Status* status      // output
+)
+```
+i.e.
+```c
+MPI_Recv(
+    greeting, 
+    MAX_STRING, 
+    MPI_CHAR, 
+    1, 
+    0, 
+    MPI_COMM_WORLD, 
+    MPI_STATUS_IGNORE
+);
+```
 
 ---
 
-## Question
+## Semantics of Send and Recv
 
-What happens in the greetings program if, instead of `strlen(greeting) + 1`, we use `strlen(greeting)`
+1. When `MPI_send` is called, and moves onto the next line, it *doesn't guarantee* that the message has been transmitted
+2. `MPI_Recv` is *blocking* so it will freeze until it receives a message that matches the specified source, tag, and communicator.
+3. `MPI_Send` from the **same** process is *non-overtaking*, 
+    - so if `process 1` sends two messages to `process 0`, the first message sent by `process 1` must be available to `process 0` before the second message.
 
-What if we use `MAX_STRING` instead?
+4. But there is **no** restriction on **arrival time** of messages sent from **different** processes,
+        - for example, if `process 1` is running on a machine on Mars, 
+    - while `process 2 and 3` are both running on the same machine in San Francisco, 
+    - and if `process 1` sends its message a nanosecond before `2` sends its message
+    - it would be extremely unreasonable to require that `process 1`'s message arrive before `process 2`'s message.
+
+---
+
+## Potential Pitfall
+
+Notice that `MPI_Recv` tries to receive a message that matches the specified source, tag, and communicator.
+
+If it **does not** find one, the program will *hang*
+
+So when designing an MPI program, we need to make sure that for every `MPI_Recv` there is a corresponding `MPI_Send` that matches the source, tag, and communicator.
