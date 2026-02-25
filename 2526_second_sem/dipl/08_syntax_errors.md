@@ -1,6 +1,6 @@
 ---
-title: 07 Syntax Errors
-exportFilename: exports/dipl/07_syntax
+title: 08 Syntax Errors
+exportFilename: exports/dipl/08_syntax_errors
 lineNumbers: true
 ---
 
