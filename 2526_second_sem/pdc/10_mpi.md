@@ -1,6 +1,6 @@
 ---
-title: 10 MPI
-exportFilename: exports/pdc/09_mpi
+title: 10 MPI Example
+exportFilename: exports/pdc/10_example
 lineNumbers: true
 ---
 
