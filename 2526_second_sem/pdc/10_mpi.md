@@ -75,10 +75,10 @@ $$
 In code, that would look like
 
 ```c
-// input: a, b n
+// input: start, end, n
 
 h = (end - start) / n;
-approx = (f(a) + f(end))/2.0;
+approx = (f(start) + f(end))/2.0;
 for (i = 1; i < n; i++) {
     x_i = start + i * h;
     approx += f(x_i);
@@ -181,7 +181,3 @@ And input
 - `n = 10`
 - `n = 1000`
 - `n = 1000000` (number of trapezoids)
-
----
-
-## Inputs
