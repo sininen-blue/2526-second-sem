@@ -299,22 +299,3 @@ This is a weird corner case in java
 
 In Lox, equality is *slightly* different compared to java, primarily, we need to handle `null` values separately since `Java` throws a `NullPointerException` if we try to call `equals` on a `null` value
 
----
-
-## Runtime Errors
-
----
-
-## Detecting Runtime Errors
-
----
-
-## Hooking it up
-
----
-
-## Reporting runtime errors
-
----
-
-## Running the interpreter
