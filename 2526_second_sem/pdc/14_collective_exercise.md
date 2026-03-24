@@ -1,6 +1,6 @@
 ---
-title: 14 Scatter, Gather, Allgather
-exportFilename: exports/pdc/13_scatter
+title: 14 Reduce
+exportFilename: exports/pdc/14_reduce
 lineNumbers: true
 ---
 
