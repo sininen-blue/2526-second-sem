@@ -4,6 +4,10 @@ exportFilename: exports/dipl/11_scope
 lineNumbers: true
 ---
 
+# Scope
+
+---
+
 ## Scope
 
 Defines a *region* where a *name* **maps** to a certain *entitiy*
@@ -43,15 +47,11 @@ Lexical scope is in contrast to *dynamic scope* where we don't know what a name 
 
 ```
 class Saxophone {
-    play() {
-        print "toot";
-    }
+    play() { print "toot"; }
 }
 
 class GolfClub {
-    play() {
-        print "fore";
-    }
+    play() { print "fore"; }
 }
 
 fun playIt(thing) {
@@ -176,5 +176,3 @@ Note that the block itself is a statement and can appear anywhere a statement is
 ---
 
 ## Run through
-
----
