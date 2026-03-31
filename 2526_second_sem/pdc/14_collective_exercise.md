@@ -21,7 +21,7 @@ One of the most common collective operations is `MPI_Reduce`
 Reductions can be difficult to implement especially in cases where *order* matters
 
 ```
-[1, 2, 3] -> 9
+[1, 2, 3] -> 6
 ```
 
 This becomes *more difficult* in a distributed setting
@@ -140,7 +140,6 @@ if (world_rank == 0) {
 ```
 
 ---
-
 layout: center
 ---
 
