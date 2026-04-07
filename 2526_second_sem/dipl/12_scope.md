@@ -1,6 +1,6 @@
 ---
-title: 11 Scope
-exportFilename: exports/dipl/11_scope
+title: 12 Scope
+exportFilename: exports/dipl/12_scope
 lineNumbers: true
 ---
 
@@ -176,3 +176,25 @@ Note that the block itself is a statement and can appear anywhere a statement is
 ---
 
 ## Run through
+
+```
+var a = "global a";
+var b = "global b";
+var c = "global c";
+{
+    var a = "outer a";
+    var b = "outer b";
+    {
+        var a = "inner a";
+        print a;
+        print b;
+        print c;
+    }
+    print a;
+    print b;
+    print c;
+}
+print a;
+print b;
+print c;
+```
