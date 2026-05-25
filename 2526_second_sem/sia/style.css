@@ -1,0 +1,31 @@
+:root {
+	--slidev-code-font-size: 14px !important;
+	--slidev-code-line-height: 21px !important;
+}
+
+.slidev-layout {
+	p {
+		font-size: 1.2rem;
+	}
+
+	strong {
+		color: #ff4081;
+	}
+
+	em {
+		color: #2196f3;
+	}
+
+	.col-left {
+		padding-right: 1rem;
+	}
+
+	.col-right {
+		padding-left: 1rem;
+	}
+
+	h3 {
+		text-decoration: underline;
+		text-decoration-color: #2196f3;
+	}
+}
