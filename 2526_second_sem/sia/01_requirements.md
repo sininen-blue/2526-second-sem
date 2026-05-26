@@ -320,16 +320,20 @@ layout: center
 
 Group yourselves into groups of 3-4 people (write names down on paper)
 
-
 Create a list of (categorized) requirements for a proposed simple system
+- so create a list of requirements
+- say what categories they fall into
+- explain why you have these requirements
+- and why you categorized them the way you did
 
 Present your requirements to the class
 
 - You have 60 minutes
 - At least 10 requirements
 - Everyone must present
-- No powerpoint
+- No powerpoint (just a doc of requirements)
 - I'll ask questions about your requirements, so be prepared
+
 
 ---
 
@@ -440,7 +444,7 @@ A major stakeholder watches attends a seminar and gets inspired. They request a 
 
 ## Activity: Scope Creep
 
-In your groups, discuss how you would respond to the stakeholder's request for the AI-powered meal planner feature.
+Individually, discuss how you would respond to the stakeholder's request for the AI-powered meal planner feature.
 
 With the format:
 
@@ -448,10 +452,8 @@ With the format:
 2. **Evaluation**: How does this new requirement align with the project's business objectives, vision, scope, limitations, and success criteria?
 3. **Decision**: Would you approve, reject, or defer this requirement? Justify
 
-Each group will present their decision and reasoning to the class.
+Submit as an essay in NEO 
 
-- 3 minute minimum, 5 minute max
-- no powerpoint, just discussion
 - be prepared to answer questions about your decision
 
 ---

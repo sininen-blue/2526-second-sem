@@ -8,113 +8,123 @@ lineNumbers: true
 
 ---
 
-## Software requirement specification (SRS) format
+## Software Requirement Specification (SRS)
 
-The *software requirement specification* (SRS) document is a comprehensive description of the intended purpose and environment for software under development. 
+A *Software Requirement Specification* (SRS) is a comprehensive document that details the intended purpose, environment, and behavior of software under development. 
 
-It fully describes what the software *will do* and how it will be *expected to perform*. 
-
-The SRS document is used as a *reference* for the development team, stakeholders, and testers throughout the software development lifecycle.
-
----
-
-## Format
-
-1. Introduction
-2. General Description
-3. Functional Requirements
-4. Non-functional Requirements
-5. Performance Requirements
-6. Design Constraints
-7. Non-functional Attributes
-8. Preliminary Schedule and Budget
-9. Appendices
-
-Note that this is **not** a formal document template, but a *general* outline of the sections that should be included 
-
-The specific content and structure may vary depending on the project and organization.
+* **Core:** It *explicitly* states what the software **will do** and how it is **expected to perform**.
+* **Living Reference:** It serves as the *single source of truth* for the development team, stakeholders, QA engineers, and project managers throughout the entire software development lifecycle (SDLC).
 
 ---
 
-## Introduction
+## The SRS Structural Outline
 
-1. The purpose of the document - Why this SRS exists.
-2. The scope of the software - What the system will and will *not* do.
-3. Overview - A roadmap for the rest of the document.
+A standard SRS document is broken down into the following key sections:
 
-i.e.
-> This document specifies the requirements for the "Smart Pantry" mobile app. It is intended for household managers to track grocery inventory and reduce waste. The scope includes barcode scanning, manual entry, and expiry notifications, but excludes direct online grocery ordering.
-
----
-
-## General Description
-
-1. objective of a user - What the user wants to achieve.
-2. a user characteristic - Expectations about user skills and background.
-3. features, benefits, importance - High-level summary of capabilities.
-
-i.e.
-> A household manager wants to avoid buying duplicate items (Objective). 
-
-> Users are expected to be familiar with smartphone apps but are often multi-tasking (Characteristic). 
-
-> The app provides real-time inventory visibility, saving money and reducing food waste (Benefit).
+1. **Introduction**
+2. **General Description**
+3. **Functional Requirements**
+4. **Non-Functional Requirements**
+5. **Performance Requirements**
+6. **Design Constraints**
+7. **Non-Functional Attributes**
+8. **Preliminary Schedule and Budget**
+9. **Appendices**
 
 ---
 
-## Functional Requirements
+## 1. Introduction
 
-1. Operation of the program is *fully explained* - Detailed behavior for *every system feature*.
+The introduction sets the stage for the project, aligning all stakeholders on the baseline vision.
 
-i.e.
-> When a user scans a product barcode, the system shall fetch the product name and category from a global database and add it to the user's current inventory list with a default quantity of one.
+* **Purpose:** Explains *why* this document exists and who the intended audience is.
+* **Scope:** Defines the boundaries—explicitly stating what the system *will* and *will not* do.
+* **Overview:** Provides a brief roadmap of how the rest of the document is structured.
 
----
-
-## Non-functional Requirements
-
-1. *Performance* - Speed, response time, and resource usage.
-2. *Security* - Data protection, privacy, and authentication.
-3. *Usability* - Ease of learning, efficiency, and accessibility.
-4. *Reliability* - Availability and fault tolerance.
-
-i.e.
-> The application shall synchronize inventory changes with the cloud database within 2 seconds of a network connection being available. All user credentials must be stored using industry-standard salted hashing algorithms.
+> ### Example:
+> This document specifies the requirements for the "Smart Pantry" mobile application, designed for household managers to track grocery inventory and reduce waste. The scope includes barcode scanning, manual item entry, and automated expiry notifications. It explicitly excludes direct online grocery ordering or third-party e-commerce integrations.
 
 ---
 
-## Performance, Constraints, and Attributes
+## 2. General Description
 
-- **Performance**: Quantitative requirements (e.g., "Must handle 1000 users").
-- **Design Constraints**: Limitations on tools, languages, or hardware (e.g., "Must run on iOS 15+").
-- **Non-functional Attributes**: Portability, maintainability, and testability.
+This section provides high-level context about the software without diving into deep technical mechanics.
 
-i.e.
-> The system must be developed using React Native to ensure cross-platform compatibility for both iOS and Android from a single codebase.
+* **User Objective:** What the *end-user* ultimately wants to accomplish using this software.
+* **User Characteristics:** Background, expected *technical skill* level, and environmental *constraints* of the target user.
+* **Features, Benefits, & Importance:** A summary of the system’s core capabilities and the *value* they deliver.
+
+Note that there would usually be multiple objectives, characteristics, and benefits in an actual project
+
+> ### Example:
+> * *User Objective:* A household manager wants to avoid buying duplicate items during grocery trips.
+> * *User Characteristic:* Users are expected to be familiar with basic smartphone applications but will frequently use the app while multi-tasking in a kitchen or grocery store environment.
+> * *Benefits:* The app provides real-time inventory visibility, saving users money and significantly reducing domestic food waste.
+
 
 ---
 
-## Schedule, Budget, and Appendices
+## 3. Functional Requirements
 
-- **Schedule**: Major milestones and delivery dates.
-- **Budget**: Estimated costs for development, hosting, and maintenance.
-- **Appendices**: Glossary of terms, diagrams, and reference documents.
+This is the core technical blueprint of the document. It **fully explains the operation** of the program.
 
-i.e.
-> **Milestone 1**: Initial Prototype (June 15). 
+* Every system feature *must be detailed* with clear, measurable inputs, behaviors, and outputs.
+* Requirements should typically be written using objective **"shall"** statements to make them clear and testable.
 
-> **Glossary**: "Inventory Sync" refers to the reconciliation of local and remote database states.
+> ### Example:
+> When a user successfully scans a product barcode via the device camera, the system *shall* fetch the product name and category from the global database, update the user’s local inventory list, and assign a default quantity of one (1).
 
 ---
 
-## *Activity*: SRS Document Creation
+## 4. Non-Functional Requirements (NFRs)
 
-With the same groups as before, create an SRS document for the software project you have been assigned to
+Define *how well* the system performs its functions, focusing on environmental *behavior* and *quality* attributes.
 
-- pdf format
-- groupname_srs.pdf
-- each member must submit on NEO
+* **Performance:** System speed, response times, throughput, and resource utilization constraints.
+* **Security:** Data protection, encryption, user privacy guidelines, and authentication protocols.
+* **Usability:** Ease of learning, user interface efficiency, and accessibility standards (e.g., WCAG).
+* **Reliability:** System availability metrics, uptime guarantees, and fault tolerance behavior.
 
-deadline is the end of this class
+> ### Example:
+> The application *shall* synchronize local inventory changes with the cloud database within two (2) seconds of an active network connection becoming available. Furthermore, all user credentials *must* be encrypted and stored using industry-standard salted hashing algorithms.
 
+---
 
+## 5. Performance, Constraints, and Attributes
+
+While closely tied to non-functional requirements, these sections impose *strict boundaries* on *engineering decisions*, architectural design, and quality metrics.
+
+* **Performance (Quantitative):** Specific, *measurable numeric limits* (e.g., concurrent user support, database limits).
+* **Design Constraints:** *Hard restrictions* imposed by technology, hardware, legacy software, or compliance (e.g., languages, frameworks, operating systems).
+* **Non-Functional Attributes:** Standards for portability (cross-platform capacity), maintainability (code readability), and testability.
+
+> ### Example:
+> The system *must* be developed using the React Native framework to ensure cross-platform compatibility for both iOS (version 15+) and Android from a single codebase.
+
+---
+
+## 6. Schedule, Budget, and Appendices
+
+The practical operational details
+
+* **Schedule:** Major project milestones, sprint breakdowns, and hard delivery deadlines.
+* **Budget:** Estimated financial costs spanning development hours, cloud hosting architectures, and third-party API dependencies.
+* **Appendices:** A glossary of technical terms, system architecture diagrams, UX wireframes, and external reference documentation.
+
+> ### Example:
+> * **Milestone 1:** Initial UI Prototype & Wireframes delivery (Due: June 15).
+> * **Glossary:** *"Inventory Sync"* refers to the automated, bi-directional reconciliation process between the local device storage state and the remote cloud database state.
+
+---
+
+## Activity: SRS Document Creation
+
+Working with your established project groups, collaborate to build a comprehensive SRS document for your assigned software project. Ensure you follow the structure detailed above.
+
+### Submission Guidelines
+* *File Format:* PDF format only (`.pdf`)
+* *File Naming Convention:* `groupname_srs.pdf`
+* *Submission Platform:* **Each** member must upload the final document on *NEO*.
+
+### Time Limit
+* **120 minutes**
