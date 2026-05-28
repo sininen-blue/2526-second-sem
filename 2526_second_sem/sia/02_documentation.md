@@ -117,14 +117,58 @@ The practical operational details
 
 ---
 
+## Examples
+
+Note that these do not follow the exact structure outlined above, but they do provide a good reference for the level of detail and clarity expected in an SRS document. 
+
+- https://www.enabel.be/app/uploads/2025/06/Annex-A-Detailed-Software-Requirements-Specification-SRS.pdf
+- https://www.cse.iitk.ac.in/users/pankajjalote/OldSEbookSite/CaseStudies/CaseStudy1/SRS.pdf
+- https://dspmuranchi.ac.in/pdf/Blog/srs_template-ieee.pdf
+- https://dspmuranchi.ac.in/pdf/Blog/srs_template-ieee.pdf
+
+
+---
+
 ## Activity: SRS Document Creation
 
 Working with your established project groups, collaborate to build a comprehensive SRS document for your assigned software project. Ensure you follow the structure detailed above.
+
+Work in Google Docs and include a URL to the document. Ensure that all group members have edit permissions to the document.
+
+This is so that I can check the edit history for individual grading
+
+> Note that the specific content of the SRS does not have to be consistent, it just has to be comprehensive enough to understand the project and the requirements. 
+>
+> The goal is to practice writing clear, detailed, and testable requirements.
 
 ### Submission Guidelines
 * *File Format:* PDF format only (`.pdf`)
 * *File Naming Convention:* `groupname_srs.pdf`
 * *Submission Platform:* **Each** member must upload the final document on *NEO*.
 
-### Time Limit
-* **120 minutes**
+> 120 minutes
+
+---
+
+### Business Scenarios for Assignment
+
+Choose one of the following scenarios for your SRS document:
+
+1. **Music School:** A lesson scheduling system for students and teachers, including payment processing and progress tracking.
+2. **Community Garden:** A plot reservation system with water-usage tracking and shared tool inventory management.
+3. **Youth Sports League:** A team registration portal with game schedule generation and automated referee assignments.
+4. **Pet Grooming Salon:** An online booking platform with service-level selection and automated appointment reminders.
+5. **Artisan Craft Marketplace:** An inventory tracker for small-batch creators, supporting event pop-up logistics and vendor booth mapping.
+6. **Neighborhood Tool Library:** A lending system for specialized home tools, including membership management and equipment condition reporting.
+
+---
+
+### Business Scenarios for Assignment
+
+7. **Bicycle Repair Shop:** A maintenance tracking portal where customers can check the real-time status of their repairs and receive quote approvals.
+8. **Local Theater Group:** A ticket sales system with seat selection mapping, volunteer sign-up sheets, and show-night cast notifications.
+9. **Urban Farm Share:** A subscription box management system for local vegetable shares, including harvest updates and custom delivery scheduling.
+10. **Dance Studio:** An instructor portal for managing student class levels, recital choreography documentation, and costume measurement tracking.
+11. **Mobile Car Wash:** An on-demand service app where users pin their vehicle location, select detailing packages, and receive status updates during the wash.
+12. **Residential Property Manager:** A maintenance request portal for tenants, integrating automated vendor dispatching and cost tracking for building owners.
+
