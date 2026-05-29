@@ -8,103 +8,129 @@ lineNumbers: true
 
 ---
 
+> So you now have a written SRS, that does not mean your SRS is *complete*
+
+As a *living document* your SRS still needs to go through *validation*
+
 Various techniques can help you to evaluate the correctness and quality of your requirements. 
 
-One approach is to quantify each requirement so that you can think of a way to measure how well a proposed solution satisfies it. 
+---
 
-use the term fit criteria to describe such quantifications. 
+## Validation
+
+Validating requirements allows teams to build a solution that meets the business objectives. 
+
+Requirements validation activities attempt to ensure that: 
+
+- The software requirements *accurately* describe the intended system capabilities.
+- The software requirements are *correctly derived* from the business requirements, system requirements, business rules, and other sources.
+
+- The requirements are *complete*, *feasible*, and *verifiable*.
+- All requirements are *necessary* 
 
 ---
 
-Verifying requirements to ensure that they have all the desired properties of high-quality requirements is also an essential activity. 
+## Reviewing requirements
 
-Validating requirements allows teams to build a correct solution that meets the stated business objectives. Requirements validation activities attempt to ensure that: 
+Anytime someone *other than the author* of a work product, examines the product for problems, a *peer review* is taking place. 
 
-- The software requirements accurately describe the intended system capabilities and properties that will satisfy the various stakeholders’ needs.
-- The software requirements are correctly derived from the business requirements, system requirements, business rules, and other sources.
-- The requirements are complete, feasible, and verifiable.
-- All requirements are necessary, and the entire set is sufficient to meet the business objectives.
-- All requirements representations are consistent with each other.
-- The requirements provide an adequate basis to proceed with design and construction.
+> Reviewing requirements is a powerful technique for identifying *ambiguous* or *unverifiable* requirements
 
----
+*Informal reviews* are good for catching glaring errors, inconsistencies, and gaps
 
-## reviewing requirements
+But it’s hard for a reviewer to catch **all** of the ambiguous requirements on his own. 
 
-Anytime someone other than the author of a work product examines the product for problems, a peer review is taking place. 
+They might read a requirement and think they understands it, moving on to the next without a second thought
 
-Reviewing requirements is a powerful technique for identifying ambiguous or unverifiable requirements, requirements that aren’t defined clearly enough for design to begin, and other problems.
+Another reviewer might read the same requirement, arrive at a different interpretation, and also not think there is an issue. 
 
-Informal reviews are good for catching glaring errors, inconsistencies, and gaps
-
-But it’s hard for a reviewer to catch all of the ambiguous requirements on his own. He might read a requirement and think he understands it, moving on to the next without a second thought
-
-Another reviewer might read the same requirement, arrive at a different interpretation, and also not think there is an issue. If these two reviewers never discuss the requirement, the ambiguity will go unnoticed until later in the project
+If these two reviewers never discuss the requirement, the ambiguity will go unnoticed until later in the project
 
 ---
+
+## Formal Reviews
 
 Formal peer reviews follow a well-defined process. 
 
-A formal requirements review produces a report that identifies the material examined, the reviewers, and the review team’s judgment as to whether the requirements are acceptable. 
+A formal requirements review produces *a report* that identifies the 
+- *material examined*, 
+- the reviewers, and 
+- the review team’s judgment as to whether the requirements are *acceptable*. 
 
-The principal deliverable is a summary of the defects found and the issues raised during the review. 
-
-The members of a formal review team share responsibility for the quality of the review, although authors ultimately are responsible for the quality of the deliverables they create.
-
----
-
-The best-established type of formal peer review is called an inspection. 
-
-Inspection of requirements documents is one of the highest-leverage software quality techniques available
-
-Detailed inspection of large requirements sets is tedious and time consuming
-
-If you don’t have time to inspect everything, use risk analysis to differentiate those requirements that demand inspection from less critical, less complex, or less novel material for which an informal review will suffice
-
-Inspections are not cheap. They’re not even that much fun. But they are cheaper—and more fun—than the alternative of expending lots of effort and customer goodwill fixing problems found much later on
+The principal deliverable is a *summary of the defects* found and the issues raised during the review. 
 
 ---
 
-Inspection
+## Inspection
 
-partiscipants
+The best-established type of formal peer review is called an *inspection*. 
 
-- author and peers
-- sources of information
-- people who will work using srs
+Inspection of requirements documents is one of the *highest-leverage* software quality techniques available
 
-stages
+> Detailed inspection of large requirements sets is tedious and time consuming
 
-planning - scheduleing
-prep - context - possible
-inspection - discuss possible
-rework - -> prep
-follow up
-baesline
+If you don’t have time to inspect everything, *use risk analysis* to differentiate those requirements that *demand inspection* from less critical, less complex, or less novel material for which an informal review will suffice
 
-defect checklist
+*Inspections are not cheap*. They’re *not fun*. But they are cheaper than the alternative of expending lots of effort and customer goodwill fixing problems found much later on
 
 ---
 
-challegnegs
+## Inspection
 
-large requirements documents
+Inspection can be organized into different staegs
 
-large inspection teams
-
-geography
-
----
-
-prototyping 
-
-All kinds of prototypes allow you to find missing requirements before more expensive activities like development and testing take place. Something as simple as a paper mock-up can be used to walk through use cases, processes, or functions to detect any omitted or erroneous requirements. Prototypes also help confirm that stakeholders have a shared understanding of the requirements. Someone might implement a prototype based on his understanding of the requirements, only to learn that a requirement wasn’t clear when prototype evaluators don’t agree with his interpretation.
-
-Proof-of-concept prototypes can demonstrate that the requirements are feasible. Evolutionary prototypes allow the users to see how the requirements would work when they are implemented, to validate that the result is what they expect. Additional levels of sophistication in prototypes, such as simulations, allow more precise validation of the requirements; however, building more sophisticated prototypes will also take more time
+- planning - which includes selecting the team, scheduling, and distributing the materials to be inspected
+- preperation - which includes a *prelimenary review*, and identifying as many potential defects and issues
+- inspection - which includes a *meeting* of the team to *discuss* the potential defects and issues identified during preparation
+- rework - which includes the author of SRS making changes to address the defects and issues identified during the inspection
+- follow up - which includes the inspection team verifying that the rework has been completed and that the materials are now acceptable
+- baesline production - which includes the finalization of the materials and their incorporation into the project baseline
 
 ---
 
-testing
+## Preparation
+
+During preparation, the reviewers read the materials and identify potential defects and issues.
+
+In order to effectively find issues, an organization will likely have a *checklist* of common defects and issues to look for.
+
+<img class="mx-auto rounded w-1/2" src="./images/inspection-defect-checklist.png" alt="Inspection Checklist Example">
+
+---
+
+## Challenges with inspection
+
+Inspection has two very clear cut problems
+
+1. large requirements documents
+
+The larger the requirements document, the more work it takes to review, and the more likely it is that reviewers will miss defects and issues.
+
+2. large inspection teams
+
+In larger teams, there are more people to coordinate, and more potential for miscommunication and misunderstandings.
+
+---
+
+## Prototyping 
+
+After the creation of a new baseline requirements document, you can use prototypes to validate the requirements.
+
+All kinds of prototypes allow you to find missing requirements before more expensive activities like development and testing take place. 
+
+Something as simple as a paper mock-up can be used to walk through use cases, processes, or functions to detect any omitted or erroneous requirements. 
+
+Prototypes also help confirm that stakeholders have a shared understanding of the requirements. 
+
+> Someone might implement a prototype based on his understanding of the requirements, only to learn that a requirement wasn’t clear when prototype evaluators don’t agree with his interpretation.
+
+Proof-of-concept prototypes can demonstrate that the requirements are feasible. 
+
+Additional levels of sophistication in prototypes, such as simulations, allow more precise validation of the requirements; however, building more sophisticated prototypes will also take more time
+
+---
+
+## Testing
 
 You can begin deriving conceptual tests from user requirements early in the development process. 
 
@@ -114,13 +140,15 @@ The tests should cover the normal flow of each use case, alternative flows, and 
 
 Similarly, if you identified business process flows, the tests should cover the business process steps and all possible decision paths.
 
-These conceptual tests are independent of implementation. For example, consider a use case called “View a Stored Order” for the Chemical Tracking System. Some conceptual tests are:
+These conceptual tests are independent of implementation. 
+
+For example, consider a use case called “*View a Stored Order*” for the Chemical Tracking System. Some conceptual tests are:
 
 - User enters order number to view, order exists, user had placed the order. Expected result: show order details.
 - User enters order number to view, order doesn’t exist. Expected result: Display message “Sorry, I can’t find that order.”
 - User enters order number to view, order exists, user hadn’t placed the order. Expected result: Display message “Sorry, that’s not your order.”
 
-Ideally, a BA will write the functional requirements and a tester will write the tests from a common starting point: the user requirements 
+Ideally, a business analyst will write the functional requirements and a tester will write the tests from a common starting point: the user requirements 
 
 Ambiguities in the user requirements and differences of interpretation will lead to inconsistencies between the views represented by the functional requirements, models, and tests. 
 
@@ -128,17 +156,23 @@ As developers translate requirements into user interface and technical designs, 
 
 ---
 
+## Case Study
+
 Let’s see how the Chemical Tracking System team tied together requirements and visual models with early test thinking. 
 
 Following are several pieces of requirements-related information, all of which pertain to the task of requesting a chemical.
 
-Business requirement As described in Chapter 5 one of the primary business objectives for the Chemical Tracking System was to:
+Assuming the business objectives for the Chemical Tracking System is to:
 
 > Reduce chemical purchasing expenses by 25% in the first year.
 
-Use case A use case that aligns with this business requirement is “Request a Chemical.” 
+---
 
-This use case includes a path that permits the user to request a chemical container that’s already available in the chemical stockroom. Here’s the use case description from Figure 8-3 in Chapter 8:
+## Use Case
+
+A use case that aligns with this business requirement is “*Request a Chemical*.” 
+
+This use case includes *a path* that permits the user to request a chemical container that’s already available in the chemical stockroom. 
 
 > The Requester specifies the desired chemical to request by entering its name or chemical ID number or by importing its structure from a chemical drawing tool. The system either offers the Requester a container of the chemical from the chemical stockroom or lets the Requester order one from a vendor.
 
