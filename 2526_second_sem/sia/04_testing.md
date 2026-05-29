@@ -182,15 +182,11 @@ Here’s a bit of functionality derived from this use case:
 
 > The user shall either select one of the displayed containers or ask to place an order for a new container from a vendor.
 
-Dialog map Figure 17-6 illustrates a portion of the dialog map for the “Request a Chemical” use case that pertains to this function. 
-
-As was described in Chapter 12 the boxes in this dialog map represent user interface displays, and the arrows represent possible navigation paths from one display to another. 
-
-This dialog map was created far enough along in requirements development that the project participants were beginning to identify specific screens, menus, dialog boxes, and other dialog elements so they could give them names and contemplate a possible user interface architecture.
+<img class="mx-auto rounded w-1/2" src="./images/chemical-dialog-map.png" alt="Chemical Tracking System Use Case Diagram">
 
 ---
 
-## Test
+## Use Case
 
 Because this use case has several possible execution paths, you can envision multiple tests to address the normal flow, alternative flows, and exceptions. 
 
@@ -198,13 +194,21 @@ The following is just one test, based on the flow that shows the user the availa
 
 > At dialog box DB40, enter a valid chemical ID; the chemical stockroom has two containers of this chemical. Dialog box DB50 appears, showing the two containers. Select the second container. DB50 closes and container 2 is added to the bottom of the Current Chemical Request List in dialog box DB70.
 
+---
+
+## Use case
+
 Ramesh, the test lead for the Chemical Tracking System, wrote several tests like this one based on his understanding of the use case. 
 
-Such abstract tests are independent of implementation details. 
+Such abstract tests are *independent* of implementation details. 
 
 They don’t discuss entering data into specific fields, clicking buttons, or other specific interaction techniques. 
 
 As development progresses, the tester can refine such conceptual tests into specific test procedures.
+
+---
+
+## Testing requirements
 
 Now comes the fun part—testing the requirements. 
 
@@ -216,20 +220,28 @@ He also made sure that at least one test covered each functional requirement.
 
 Next, Ramesh traced the execution path for every test on the dialog map with a highlighter pen. 
 
-The shaded line in Figure 17-7 shows how the preceding test traces onto the dialog map.
+<img class="mx-auto rounded w-1/2" src="./images/chemical-dialog-map-highlighted.png" alt="Chemical Tracking System Dialog Map with Highlighted Paths">
 
 By tracing the execution path for each test, you can find incorrect or missing requirements, improve the user’s navigation options, and refine the tests. 
 
-Suppose that after “executing” all the tests in this fashion, the dialog map navigation line labeled “order new container” that goes from DB50 to DB60 in Figure 17-6 hasn’t been highlighted. 
+---
+
+## Finding missing requirements
+
+Suppose that after “*executing*” all the tests in this fashion, the dialog map navigation line labeled “order new container” that goes from DB50 to DB60 hasn’t been highlighted. 
 
 There are two possible interpretations:
 
 - That navigation is not a permitted system behavior. The BA needs to remove that line from the dialog map. If the SRS contains a requirement that specifies the transition, that requirement must also be removed.
 - The navigation is legitimate, but the test that demonstrates the behavior is missing.
 
+---
+
+## Finding missing requirements
+
 In another scenario, suppose a tester wrote a test based on his interpretation of the use case that says the user can take some action to move directly from dialog box DB40 to DB70. 
 
-However, the dialog map in Figure 17-6 doesn’t contain such a navigation line, so that test can’t be “executed” with the existing requirements set. 
+However, the dialog map doesn’t contain such a navigation line, so that test can’t be “executed” with the existing requirements set. 
 
 Again, there are two possible interpretations. You’ll need to determine which of the following is correct:
 
@@ -238,7 +250,7 @@ Again, there are two possible interpretations. You’ll need to determine which 
 
 In these examples, the BA and the tester combined requirements, analysis models, and tests to detect missing, erroneous, or unnecessary requirements long before any code was written. 
 
-Conceptual testing of software requirements is a powerful technique for controlling a project’s cost and schedule by finding requirement ambiguities and errors early in the game. As [ref046] pointed out,
+Conceptual testing of software requirements is a powerful technique for controlling a project’s cost and schedule by finding requirement ambiguities and errors early in the game.
 
 Use cases and tests work well together in two ways: 
 
