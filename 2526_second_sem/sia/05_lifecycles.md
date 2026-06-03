@@ -23,7 +23,7 @@ These models allow us to understand the *process* of software development, from 
 
 ## Waterfall (predictive)
 
-image here
+<img class="mx-auto rounded w-1/2" src="./images/waterfall-model.jpg" alt="Inspection Checklist Example">
 
 The most straightfoward model, characterized by *sequential*, step by step, nature
 
@@ -39,7 +39,7 @@ However, it's lack of flexibility makes it less suitable for softwar development
 
 Historically, this was not the case
 
-Most older software (think bank or government) were standalone executables that, once given to an organization *would not change*
+Most *older* software were standalone executables that, once given to an organization *would not change*
 
 In this context, waterfall was more useful
 
@@ -90,7 +90,7 @@ Even if you don't follow waterfall properly, it's still better to work on projec
 
 When working with the waterfall model, Gantt charts are often used to visually represent the project schedule, showing the start and end dates of each phase, as well as the dependencies between tasks.
 
-image here
+<img class="mx-auto rounded w-1/4" src="./images/gantt.png" alt="Gantt Chart Example">
 
 A gantt chart, because it's predictive in nature, tends to be *less accurate* as the project progresses, as it does not account for changes in requirements or unforeseen issues that may arise during development.
 
@@ -110,25 +110,33 @@ However, these principles have led to the development of various agile *methodol
 
 ## Scrum
 
-image here
-
 Scrum is an Agile framework that structures work into *time-boxed sprints*, with defined roles, artifacts, and ceremonies for *iterative* delivery.
+
+<img class="mx-auto rounded w-1/2" src="./images/scrum.png" alt="Scrum Example">
 
 Key roles include product owner, Scrum master, and development team, all collaborating to achieve sprint goals.
 
-Scrum emphasizes transparency, inspection, and adaptation, enabling teams to respond to change and deliver value incrementally.
-
-The primary strenght of scrum is its flexibility however, it's significantly more comple
+Scrum emphasizes *transparency*, *inspection*, and *adaptation*, enabling teams to respond to change and deliver value incrementally.
 
 ---
 
 ## Sprints
 
+The primary strenght of scrum is its flexibility however, it's significantly more complex to implement than waterfall, and requires a significant amount of *discipline* and *commitment* from the team to follow the framework properly.
+
+The primary unit of work in Scrum is the sprint, which is a fixed-length iteration during which a specific set of work is completed and made ready for review.
+
+Sprints are a fundamental component of the Scrum framework, representing fixed-length iterations during which a specific set of work is completed and made ready for review.
+
+Sprints typically last between one to four weeks, with a common duration of two weeks, allowing teams to maintain a steady pace and adapt to changing requirements.
+
+During a sprint, the development team focuses on completing the tasks defined in the sprint backlog, which is derived from the product backlog and prioritized by the product owner.
+
 ---
 
 ## Kanban
 
-image here
+<img class="mx-auto rounded w-1/2" src="./images/kanban.png" alt="Kanban Example">
 
 Kanban is an Agile framework that visualizes work, limits work-in-progress, and promotes continuous improvement through transparent workflows.
 
