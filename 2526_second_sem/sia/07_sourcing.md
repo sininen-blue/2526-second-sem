@@ -97,6 +97,8 @@ layout: center
 A small brand is planning on having online orders and payments, should they buy or build their payment services
 
 ---
+layout: center
+---
 
 ## Case Study: Backend
 
