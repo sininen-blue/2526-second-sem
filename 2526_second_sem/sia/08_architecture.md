@@ -28,13 +28,15 @@ This includes the hardware, software, and virtual *components* that make up the 
 
 ---
 
-## Case Study: Vercel
+## Case Study: AWS (Infrastructure as a Service)
 
-Vercel is a **Cloud Platform (PaaS)** that provides the infrastructure and deployment pipeline for *web applications*.
+AWS allows companies to "acquire" hardware capacity (CPUs, RAM, Storage) through the cloud without owning any physical machines.
 
-For smaller scale hobby projects, Vercel can be the perfect choice since it *abstracts* away the hardware aspects of server management.
+A company can build their own server room with cooling, electricity, and security (Ownership), or they can lease virtualized "instances" from AWS.
 
-This does mean that you are now *locked into* using Vercel and scaling requires dealing with Vercel's pricing.
+With AWS, you can "rent" 1,000 servers for one hour and turn them off. This is impossible if you own the physical hardware.
+
+Most companies choose to "buy" their hardware capacity from AWS because managing physical servers is a *Commodity*. 
 
 ---
 
@@ -83,6 +85,18 @@ A developer can "build" a container on their *local* laptop, and "*deploy*" it t
 If AWS becomes too expensive, the company can *move that same Docker container* to a Google Cloud or Azure server instantly.
 
 Docker provides an abstraction that prevents *Hardware Lock-in*, making the infrastructure part of the system more flexible.
+
+---
+
+## Case Study: Vercel
+
+Vercel is a **Cloud Platform (PaaS)** that provides the infrastructure and deployment pipeline for *web applications*.
+
+Vercel handles all server management, load balancing, and scaling. For the developer, the hardware layer is completely hidden.
+
+By using Vercel, you are "buying" a managed virtual environment. You don't manage the OS or virtualization; you just provide the code.
+
+The high level of convenience comes with a trade-off. Migrating a complex project away from Vercel can be difficult due to proprietary features and pricing structures.
 
 
 
