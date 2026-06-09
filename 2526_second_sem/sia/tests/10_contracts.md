@@ -1,6 +1,4 @@
-What is the primary purpose of an IT contract in the context of system integration? \n
-test \n
-this is aonother line
+What is the primary purpose of an IT contract in the context of system integration?
 
 - To govern the acquisition of hardware, software licenses, or outsourced development
 - To provide a list of technical bugs found during the testing phase
