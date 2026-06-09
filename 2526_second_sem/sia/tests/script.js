@@ -29,4 +29,12 @@
     const el = document.querySelector(sel);
     if (el && values[i]) el.value = values[i];
   });
+
+  // Click the "Save and add another of the same type" button
+  const submitBtn = document.querySelector(
+    'a[href*="commit_and_another_same"]',
+  );
+  if (submitBtn) {
+    submitBtn.click();
+  }
 })();
