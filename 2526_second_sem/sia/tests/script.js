@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bulk Form Filler
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  Bulk paste questions from Markdown format and submit sequentially
 // @match        https://urios.neolms.com/quiz_question_bank/new_question/*
 // @grant        none
@@ -22,21 +22,40 @@
   ];
 
   function parseInput(text) {
-    // 1. Split into major blocks by "---"
-    const blocks = text
+    // 1. Convert literal "\n" strings into actual newline characters
+    const normalizedText = text.replace(/\\n/g, "\n");
+
+    // 2. Split into major blocks by "---"
+    const blocks = normalizedText
       .split(/---/)
       .map((b) => b.trim())
       .filter((b) => b);
 
     return blocks.map((block) => {
-      // 2. For each block, split by the " - " delimiter
-      const parts = block
+      // 3. Check if it's a multi-line format with bullet points
+      const lines = block.split("\n");
+      const firstBulletIndex = lines.findIndex((line) =>
+        line.trim().startsWith("- "),
+      );
+
+      if (firstBulletIndex !== -1) {
+        // Question is everything before the first bullet
+        const question = lines.slice(0, firstBulletIndex).join("\n").trim();
+        // Options are the lines starting from firstBulletIndex
+        const options = lines
+          .slice(firstBulletIndex)
+          .map((line) => line.trim())
+          .filter((line) => line.startsWith("- "))
+          .map((line) => line.substring(2).trim());
+
+        return [question, ...options];
+      }
+
+      // 4. Fallback for single-line format: split by the " - " delimiter
+      return block
         .split(/\s*-\s+/)
         .map((p) => p.trim())
         .filter((p) => p);
-
-      // parts[0] is the question, parts[1-4] are options
-      return parts;
     });
   }
 
